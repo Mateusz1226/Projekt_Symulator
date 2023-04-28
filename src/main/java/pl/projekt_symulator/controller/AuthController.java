@@ -40,7 +40,6 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
-        // create model object to store form data
         UserDto user = new UserDto();
         model.addAttribute("user", user);
         return "register";
@@ -68,7 +67,7 @@ public class AuthController {
         return "redirect:/login";
     }
 
-    // handler method to handle list of users
+
     @GetMapping("/users")
     public String users(Model model){
         List<UserDto> users = userService.findAllUsers();

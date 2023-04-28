@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class MailController {
+public class MailController  {
 
 
     @Autowired
-    private JavaMailSender mailSender;
+   private JavaMailSender mailSender;
 
     @GetMapping("/mail")
     @ResponseBody
@@ -22,7 +22,7 @@ public class MailController {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom("strzelnicanozyno@gmail.com");
-        message.setTo("strzelnicanozyno@gmail.com");
+        message.setTo("Mateuszkonkel132@gmail.com");
         message.setSubject("Symulator strzelecki nożyno - rejestracja");
         message.setText("Cześć W celu potwierdzenia rejestracji kliknij w poniższy link");
 

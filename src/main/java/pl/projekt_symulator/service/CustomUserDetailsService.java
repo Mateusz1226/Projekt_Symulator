@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getPassword(),
                     mapRolesToAuthorities(user.getRoles()));
         }else{
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Wprowadziłeś nieprawidłowe dane");
         }
     }
 

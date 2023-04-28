@@ -15,7 +15,7 @@ import lombok.Setter;
 public class UserDto
 {
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "Imię nie może być puste")
     private String firstName;
     @NotEmpty
     private String lastName;

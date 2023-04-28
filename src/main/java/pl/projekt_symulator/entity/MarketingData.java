@@ -14,11 +14,11 @@ public class MarketingData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = " Marketing_data_id")
-    private Long Id;
+    @Column(name = " marketing_data_id")
+    private Long id;
    // private String Region;
-    private int Age;
-    private Boolean MarketingAgreement;
+    private int age;
+    private Boolean marketingAgreement;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -50,8 +50,7 @@ public class User
     private List<Role> roles = new ArrayList<>();
 
 
-    @OneToOne ( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "marketing_data_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private MarketingData marketingData;
 
     @OneToMany(mappedBy = "user")

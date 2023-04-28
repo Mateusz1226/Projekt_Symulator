@@ -10,6 +10,7 @@ import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.MarketingData;
 import pl.projekt_symulator.entity.Role;
 import pl.projekt_symulator.entity.User;
+import pl.projekt_symulator.mapper.MarketingDataMapper;
 import pl.projekt_symulator.mapper.UserMapper;
 import pl.projekt_symulator.repository.MarketingRepository;
 import pl.projekt_symulator.repository.RoleRepository;
@@ -31,43 +32,48 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
+    private final MarketingDataMapper marketingMapper;
 
+    private final JavaMailSender mailSender;
 
-
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, MarketingRepository marketingRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, MarketingRepository marketingRepository, UserMapper userMapper, MarketingDataMapper marketingMapper, JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.marketingRepository = marketingRepository;
         this.userMapper = userMapper;
+        this.marketingMapper = marketingMapper;
+        this.mailSender = mailSender;
     }
 
 
     @Override
     public void saveUser(UserDto userDto) {
 
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        User user = userMapper.mapToEntity(userDto);
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
+        user.setEmail(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-       Role role = roleRepository.findByName("ROLE_USER");
+        Role role = roleRepository.findByName("ROLE_ADMIN");
         if(role == null){
-          role = checkRoleExist();
+            role = checkRoleExist();
         }
         user.setRoles(Arrays.asList(role));
         user.setActive(true);
         userRepository.save(user);
 
-
-        MarketingData marketingData = new MarketingData();
-        marketingData.setUser(user);
-        marketingData.setAge(userDto.getAge());
-        marketingData.setMarketingAgreement(userDto.getMarketingAgreement());
-        marketingRepository.save(marketingData);
+        MarketingData marketingDataUser = marketingMapper.mapToEntity(userDto);
+        // MarketingData marketingData = new MarketingData();
+        marketingDataUser.setUser(user);
+        marketingDataUser.setAge(marketingDataUser.getAge());
+        marketingDataUser.setMarketingAgreement(marketingDataUser.getMarketingAgreement());
+        marketingRepository.save(marketingDataUser);
 
         sendEmail(user);
+
+
 
     }
 
@@ -84,24 +90,16 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-  /*/  private UserDto mapToUserDto(User user){
-        UserDto userDto = new UserDto();
-        String[] str = user.getName().split(" ");
-        userDto.setFirstName(str[0]);
-        userDto.setLastName(str[1]);
-        userDto.setEmail(user.getEmail());
-        return userDto;
-    }*/
+
 
     private Role checkRoleExist(){
         Role role = new Role();
-        role.setName("ROLE_USER");
+        role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
     }
 
 
-    @Autowired
-    private JavaMailSender mailSender;
+
 
     public void sendEmail(User user)  {
 
