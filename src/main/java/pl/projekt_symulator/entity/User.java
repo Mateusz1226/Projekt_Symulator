@@ -38,8 +38,6 @@ public class User
     @Column(name = "active")
     private Boolean active;
 
-   // @Length(min = 9,max = 12)
-    private String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
