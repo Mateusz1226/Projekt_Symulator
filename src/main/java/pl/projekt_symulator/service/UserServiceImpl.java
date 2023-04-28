@@ -1,6 +1,11 @@
 package pl.projekt_symulator.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.projekt_symulator.dto.UserDto;
@@ -25,6 +30,10 @@ public class UserServiceImpl implements UserService {
 
     private final MarketingRepository marketingRepository;
 
+
+
+
+
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, MarketingRepository marketingRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -35,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDto userDto) {
+
         User user = new User();
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
@@ -55,6 +65,7 @@ public class UserServiceImpl implements UserService {
         marketingData.setMarketingAgreement(userDto.getMarketingAgreement());
         marketingRepository.save(marketingData);
 
+        sendEmail(user);
 
     }
 
@@ -85,4 +96,23 @@ public class UserServiceImpl implements UserService {
         role.setName("ROLE_USER");
         return roleRepository.save(role);
     }
+
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    public void sendEmail(User user)  {
+
+
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom("strzelnicanozyno@gmail.com");
+        message.setTo(user.getEmail());
+        message.setSubject("Symulator strzelecki nożyno - rejestracja");
+        message.setText("Cześć"  + user.getName() +" W celu potwierdzenia rejestracji kliknij w poniższy link");
+
+        mailSender.send(message);
+
+    }
+
 }

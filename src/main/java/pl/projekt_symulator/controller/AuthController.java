@@ -55,7 +55,7 @@ public class AuthController {
 
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             result.rejectValue("email", null,
-                    "There is already an account registered with the same email");
+                    "Wskazany email jest już zajęty");
         }
 
         if(result.hasErrors()){
