@@ -2,13 +2,18 @@ package pl.projekt_symulator.mapper;
 
 
 
-import java.util.List;
+import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
+import pl.projekt_symulator.dto.UserDto;
+import pl.projekt_symulator.entity.User;
 
-//@Mapper(componentModel = "spring")
+import java.util.List;
+@Component
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
-  //  User mapToEntity(UserDto userDto);
- //   UserDto mapToDto (User user);
- //   List<UserDto> mapToDto(List<User> users);
+   User mapToEntity(UserDto userDto);
+   UserDto mapToDto (User user);
+  List<UserDto> mapToDto(List<User> users);
 
 }

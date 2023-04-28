@@ -1,16 +1,15 @@
 package pl.projekt_symulator.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Entity
+@Data
 @Table(name = "booked_schedules")
 public class Schedule {
 
@@ -22,4 +21,8 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Schedule(LocalDateTime start, LocalDateTime end, User mapToEntity) {
+
+    }
 }
