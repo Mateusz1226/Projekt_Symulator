@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 
 import java.util.ArrayList;
@@ -35,26 +34,11 @@ public class User
     @Column(nullable=false)
     private String password;
 
-    @Column(name = "active")
-    private Boolean active;
-
-   // @Length(min = 9,max = 12)
-    private String phoneNumber;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
             name="users_roles",
             joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
     private List<Role> roles = new ArrayList<>();
-
-
-    @OneToOne ( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "marketing_data_id")
-    private MarketingData marketingData;
-
-    @OneToMany(mappedBy = "user")
-    private List<Schedule> schedule;
-
 
 }

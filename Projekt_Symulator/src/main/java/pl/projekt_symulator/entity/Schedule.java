@@ -5,22 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Marketing_datas")
-public class MarketingData {
+@Table(name = "booked_schedules")
+public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = " Marketing_data_id")
     private Long Id;
-   // private String Region;
-    private int Age;
-    private Boolean MarketingAgreement;
-    @OneToOne
+    private LocalDateTime start;
+    private LocalDateTime end;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
 }

@@ -16,7 +16,7 @@ public class MarketingData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = " Marketing_data_id")
     private Long Id;
-   // private String Region;
+    private String Region;
     private int Age;
     private Boolean MarketingAgreement;
     @OneToOne

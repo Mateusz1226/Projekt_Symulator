@@ -19,14 +19,9 @@ public class UserDto
     private String firstName;
     @NotEmpty
     private String lastName;
-    @NotEmpty(message = "Email nie może być pusty")
+    @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
-    @NotEmpty(message = "Hasło nie może być puste")
+    @NotEmpty(message = "Password should not be empty")
     private String password;
-
-
-    private Boolean marketingAgreement;
-    private String phoneNumber;
-    private int age;
 }

@@ -74,37 +74,6 @@
           </div>
 
           <div class="form-group mb-3">
-            <label class="form-label">Wiek</label>
-            <input
-                    class="form-control"
-                    id="age"
-                    name="age"
-                    placeholder="Wprowadź swój wiek"
-                    th:field="*{age}"
-                    type="text"
-            />
-            <p th:errors = "*{age}" class="text-danger"
-               th:if="${#fields.hasErrors('age')}"></p>
-          </div>
-
-
-          <div class="form-group mb-3">
-            <label class="form-label">Telefon</label>
-            <input
-                    class="form-control"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="Wprowadź numer telefonu "
-                    th:field="*{phoneNumber}"
-                    type="text"
-            />
-            <p th:errors = "*{phoneNumber}" class="text-danger"
-               th:if="${#fields.hasErrors('phoneNumber')}"></p>
-          </div>
-
-
-
-          <div class="form-group mb-3">
             <label class="form-label">Email</label>
             <input
                     class="form-control"
@@ -131,24 +100,6 @@
             <p th:errors = "*{password}" class="text-danger"
                th:if="${#fields.hasErrors('password')}"></p>
           </div>
-
-
-
-          <div class="checkbox">
-            <label>  Zgoda Marketingowa</label>
-            <input
-
-                    id="MarketingAgreement"
-                    name="MarketingAgreement"
-                    placeholder="Zgoda marketingowa"
-                    th:field="*{marketingAgreement}"
-                    type="checkbox"
-            />
-            <p th:errors = "*{marketingAgreement}" class="text-danger"
-               th:if="${#fields.hasErrors('marketingAgreement')}"></p>
-          </div>
-
-
           <div class="form-group">
             <button class="btn btn-primary" type="submit">Register</button>
             <span>Already registered? <a th:href="@{/login}">Login here</a></span>

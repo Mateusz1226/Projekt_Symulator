@@ -23,15 +23,12 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
-    private final MarketingRepository marketingRepository;
-
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder, MarketingRepository marketingRepository) {
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.marketingRepository = marketingRepository;
     }
 
     @Override
@@ -42,21 +39,12 @@ public class UserServiceImpl implements UserService {
         // encrypt the password using spring security
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_USER");
+        Role role = roleRepository.findByName("ROLE_ADMIN");
         if(role == null){
             role = checkRoleExist();
         }
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
-
-
-        MarketingData marketingData = new MarketingData();
-        marketingData.setUser(user);
-        marketingData.setAge(userDto.getAge());
-        marketingData.setMarketingAgreement(userDto.getMarketingAgreement());
-        marketingRepository.save(marketingData);
-
-
     }
 
     @Override
@@ -83,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     private Role checkRoleExist(){
         Role role = new Role();
-        role.setName("ROLE_USER");
+        role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
     }
 }
