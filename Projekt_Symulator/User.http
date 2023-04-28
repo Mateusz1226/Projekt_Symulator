@@ -1,0 +1,22 @@
+
+POST http://localhost:8888/register/save/?trace=true&message=true
+Content-Type: application/json
+
+{
+  "firstName":"Mateusz",
+  "password":"KalinaMalina",
+  "lastName":"Konkel",
+  "email":"strzelnicanozyno1@gmail.com",
+  "phoneNum":"phoneNumber"
+
+}
+
+###
+# @no-redirect
+<<<<<<< HEAD
+GET http://localhost:8888/users/?trace=true&message=true
+=======
+GET http://localhost:8888/calender/?trace=true&message=true
+>>>>>>> 449086cc92c46fe4ffa4aab94fd7ebf4bcf256ce
+
+
