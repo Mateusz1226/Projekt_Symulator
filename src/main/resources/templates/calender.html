@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Kalendarz</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
+    <script   src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
+</head>
+<body>
+<div id="calendar" style="height: 800px"></div>
+
+<script>
+    var calendar = new tui.Calendar(document.getElementById('calendar'), {
+        defaultView: 'month',
+        taskView: true,
+        template: {
+
+        }
+
+    });
+</script>
+</body>
+</html>
