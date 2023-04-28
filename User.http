@@ -13,6 +13,10 @@ Content-Type: application/json
 
 ###
 # @no-redirect
+<<<<<<< HEAD
 GET http://localhost:8888/users/?trace=true&message=true
+=======
+GET http://localhost:8888/calender/?trace=true&message=true
+>>>>>>> 449086cc92c46fe4ffa4aab94fd7ebf4bcf256ce
 
 
