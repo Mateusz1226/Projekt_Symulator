@@ -2,19 +2,20 @@ package pl.projekt_symulator.dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ScheduleDto {
-
     private Long Id;
-    private String start;
-    private String end;
+    private LocalDate start;
+    private LocalDate end;
 }
+  //  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+
+ //   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

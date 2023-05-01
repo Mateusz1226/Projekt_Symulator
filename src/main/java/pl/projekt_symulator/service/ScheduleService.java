@@ -5,12 +5,11 @@ import pl.projekt_symulator.dto.ScheduleDto;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.Schedule;
 
+import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.mapper.ScheduleMapper;
 import pl.projekt_symulator.mapper.UserMapper;
 import pl.projekt_symulator.repository.ScheduleRepository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Service
@@ -29,20 +28,29 @@ public class ScheduleService {
         this.userService = userService;
     }
 
-    public String book(ScheduleDto schedule, Long userId) {
+    public String book(ScheduleDto scheduleDto, Long userId) {
 
-        Schedule schedule1 = scheduleRepository.findByStartAndEnd(LocalDateTime.parse(schedule.getStart()),LocalDateTime.parse(schedule.getEnd()));
 
-        if (schedule1 != null) {
+        Schedule Schedule = scheduleRepository.findByStartAndEnd(scheduleDto.getStart(), scheduleDto.getEnd());
+
+        if ( Schedule != null) {
             throw new IllegalArgumentException("Termin jest już zajęty");
         }
 
 
-        UserDto user = userService.findUserById(userId);
+        Schedule scheduleToEntity = new Schedule();
 
-        scheduleRepository.save(new Schedule(LocalDateTime.parse(schedule.getStart()),LocalDateTime.parse(schedule.getEnd()),userMapper.mapToEntity(user)));
+        scheduleToEntity.setId(scheduleDto.getId());
+        scheduleToEntity.setStart(scheduleDto.getStart());
+        scheduleToEntity.setEnd(scheduleDto.getEnd());
 
-        userMapper.mapToEntity(user).setSchedule(Arrays.asList(schedule1));
+        //zabezpieczenie co jakby nie było id w bazie ???
+        User user = userMapper.mapToEntity(userService.findUserById(userId));
+
+
+        scheduleToEntity.setUser(user);
+
+        scheduleRepository.save(scheduleToEntity);
 
         return "Termin został zarezerwowany";
     }
@@ -51,7 +59,7 @@ public class ScheduleService {
 
         UserDto user = userService.findUserById(userId);
 
-        Schedule schedule1 = scheduleRepository.findByStartAndEndAndUser(schedule.getStart(),schedule.getEnd(), userMapper.mapToEntity(user));
+        Schedule schedule1 = scheduleRepository.findByStartAndEndAndUser(schedule.getStart(), schedule.getEnd(), userMapper.mapToEntity(user));
         if (schedule == null) {
             throw new IllegalArgumentException("Nie możesz odwołać tego terminu");
         }

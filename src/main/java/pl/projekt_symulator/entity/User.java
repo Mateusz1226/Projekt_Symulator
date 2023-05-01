@@ -59,8 +59,8 @@ public class User
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private MarketingData marketingData;
 
-    @OneToMany(mappedBy = "user")
-    private List<Schedule> schedule;
+  //  @OneToMany(mappedBy = "user")
+ //   private List<Schedule> schedule;
 
 
 }

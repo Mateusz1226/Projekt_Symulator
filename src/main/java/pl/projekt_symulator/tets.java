@@ -9,6 +9,7 @@ public class tets {
     public static void main(String[] args) {
         LocalDateTime start = LocalDateTime.now();
         System.out.println(start);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         String formattedDateTime = start.format(formatter);
         System.out.println(formattedDateTime);
