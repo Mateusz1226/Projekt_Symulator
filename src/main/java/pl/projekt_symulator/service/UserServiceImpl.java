@@ -1,7 +1,7 @@
 package pl.projekt_symulator.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +19,7 @@ import pl.projekt_symulator.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,6 +87,12 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+
+   public UserDto findUserById (Long id) {
+     User user =  userRepository.findById(id).orElse(null);
+
+        return userMapper.mapToDto(user);
+   }
 
     private Role checkRoleExist() {
         Role role = new Role();

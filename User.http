@@ -12,11 +12,19 @@ Content-Type: application/json
 }
 
 ###
-# @no-redirect
-<<<<<<< HEAD
+
 GET http://localhost:8888/users/?trace=true&message=true
-=======
+###
 GET http://localhost:8888/calender/?trace=true&message=true
->>>>>>> 449086cc92c46fe4ffa4aab94fd7ebf4bcf256ce
 
 
+###
+POST http://localhost:8888/schedule/save?trace=true&message=true
+Content-Type: application/json
+
+{
+  "start":"2023-05-01",
+  "end":"2023-05-01",
+  "id": 1
+
+}
