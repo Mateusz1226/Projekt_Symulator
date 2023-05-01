@@ -46,8 +46,21 @@ public class ScheduleController {
         }
 
 
-    @DeleteMapping("/schedule")
-    public String unbookTerm(@RequestBody Schedule schedule, @RequestParam long userId) {
-        return scheduleService.unbook(schedule, userId);
+
+    @GetMapping("/scheduleDelete")
+    public String showscheduleDeleteForm(Model model){
+        ScheduleDto scheduleDto = new ScheduleDto();
+        model.addAttribute("scheduleDto", scheduleDto);
+
+        return "scheduleDelete";
+    }
+
+
+
+    @PostMapping("/schedule/delete")
+    public String unbookTerm(@ModelAttribute("schedule") ScheduleDto schedule,
+                             BindingResult result,
+                             Model model) {
+        return scheduleService.unbook(schedule, schedule.getId());
     }
 }

@@ -39,7 +39,6 @@ public class ScheduleService {
 
 
         Schedule scheduleToEntity = new Schedule();
-
         scheduleToEntity.setId(scheduleDto.getId());
         scheduleToEntity.setStart(scheduleDto.getStart());
         scheduleToEntity.setEnd(scheduleDto.getEnd());
@@ -49,17 +48,16 @@ public class ScheduleService {
 
 
         scheduleToEntity.setUser(user);
-
         scheduleRepository.save(scheduleToEntity);
 
         return "Termin został zarezerwowany";
     }
 
-    public String unbook(Schedule schedule, Long userId) {
+    public String unbook(ScheduleDto scheduleDto, Long userId) {
 
         UserDto user = userService.findUserById(userId);
-
-        Schedule schedule1 = scheduleRepository.findByStartAndEndAndUser(schedule.getStart(), schedule.getEnd(), userMapper.mapToEntity(user));
+          // trzeba wyjąć na poziom kontrollera
+        Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), userMapper.mapToEntity(user));
         if (schedule == null) {
             throw new IllegalArgumentException("Nie możesz odwołać tego terminu");
         }
