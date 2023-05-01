@@ -27,13 +27,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final MarketingRepository marketingRepository;
-
     private final UserMapper userMapper;
-
     private final MarketingDataMapper marketingMapper;
-
     private final JavaMailSender mailSender;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, MarketingRepository marketingRepository, UserMapper userMapper, MarketingDataMapper marketingMapper, JavaMailSender mailSender) {
@@ -57,7 +53,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
+        if (role == null) {
             role = checkRoleExist();
         }
         user.setRoles(Arrays.asList(role));
@@ -68,11 +64,11 @@ public class UserServiceImpl implements UserService {
         // MarketingData marketingData = new MarketingData();
         marketingDataUser.setUser(user);
         marketingDataUser.setAge(marketingDataUser.getAge());
+        marketingDataUser.setPhoneNumber(marketingDataUser.getPhoneNumber());
         marketingDataUser.setMarketingAgreement(marketingDataUser.getMarketingAgreement());
         marketingRepository.save(marketingDataUser);
 
         sendEmail(user);
-
 
 
     }
@@ -91,24 +87,21 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-    private Role checkRoleExist(){
+    private Role checkRoleExist() {
         Role role = new Role();
         role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
     }
 
 
-
-
-    public void sendEmail(User user)  {
+    public void sendEmail(User user) {
 
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("strzelnicanozyno@gmail.com");
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno - rejestracja");
-        message.setText("Cześć"  + user.getFirstName() +" W celu potwierdzenia rejestracji kliknij w poniższy link");
+        message.setText("Cześć" + user.getFirstName() + " W celu potwierdzenia rejestracji kliknij w poniższy link");
 
         mailSender.send(message);
 

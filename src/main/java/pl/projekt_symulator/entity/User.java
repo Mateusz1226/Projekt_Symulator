@@ -1,11 +1,14 @@
 package pl.projekt_symulator.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
+
 
 
 import java.util.ArrayList;
@@ -26,16 +29,19 @@ public class User
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
+
     private String firstName;
 
-    @Column(nullable=false)
+
     private String lastName;
+
 
     @Column(nullable=false, unique=true)
     private String email;
 
+
     @Column(nullable=false)
+
     private String password;
 
     @Column(name = "active")

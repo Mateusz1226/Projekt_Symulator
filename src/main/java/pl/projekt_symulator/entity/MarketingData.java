@@ -1,9 +1,12 @@
 package pl.projekt_symulator.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +20,15 @@ public class MarketingData {
     @Column(name = " marketing_data_id")
     private Long id;
    // private String Region;
+
+
     private int age;
+
     private Boolean marketingAgreement;
+
+
+    private String phoneNumber;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
