@@ -47,7 +47,7 @@ public class SpringSecurity   {
                                 .requestMatchers("/index").permitAll()
                                 .requestMatchers("/calender.html").permitAll()
                                 .requestMatchers("/mail").permitAll()
-                                .requestMatchers("/schedule/**").permitAll()
+                                .requestMatchers("/schedule/**").authenticated()
                                 .requestMatchers("/scheduleDelete/**").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
 
@@ -55,7 +55,7 @@ public class SpringSecurity   {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                .defaultSuccessUrl("/schedule")
                                 .permitAll()
                 ).logout(
                         logout -> logout

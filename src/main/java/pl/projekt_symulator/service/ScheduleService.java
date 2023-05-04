@@ -31,7 +31,7 @@ public class ScheduleService {
         this.mailSender = mailSender;
     }
 
-    public String book(ScheduleDto scheduleDto, Long userId) {
+    public String book(ScheduleDto scheduleDto, User user) {
 
 
         Schedule Schedule = scheduleRepository.findByStartAndEnd(scheduleDto.getStart(), scheduleDto.getEnd());
@@ -46,9 +46,6 @@ public class ScheduleService {
         schedule.setStart(scheduleDto.getStart());
         schedule.setEnd(scheduleDto.getEnd());
 
-        //zabezpieczenie co jakby nie było id w bazie ???
-        User user = userService.findUserById(userId);
-
 
         schedule.setUser(user);
         scheduleRepository.save(schedule);
@@ -59,9 +56,9 @@ public class ScheduleService {
         return "Termin został zarezerwowany";
     }
 
-    public void unbook(ScheduleDto scheduleDto, Long userId) {
+    public void unbook(ScheduleDto scheduleDto, User user) {
 
-        User user = userService.findUserById(userId);
+
           // trzeba wyjąć na poziom kontrollera
         Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), user);
         if (schedule == null) {
@@ -86,7 +83,7 @@ public class ScheduleService {
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno potwierdzenie rezerwacji");
         if (mailType.equals("book")) {
-            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerowanie wiyzty w terimnie od" + schedule.getStart() + " do " + schedule.getEnd()+".");
+            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od" + schedule.getStart() + " do " + schedule.getEnd()+".");
             mailSender.send(message);
             return;
         }

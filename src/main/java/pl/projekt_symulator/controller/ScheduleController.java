@@ -1,7 +1,8 @@
 package pl.projekt_symulator.controller;
 
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,15 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import pl.projekt_symulator.dto.ScheduleDto;
 import pl.projekt_symulator.dto.UserDto;
-import pl.projekt_symulator.entity.Schedule;
+import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.ScheduleService;
+import pl.projekt_symulator.service.UserService;
 
 @Controller
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    private final UserService userService;
 
-    public ScheduleController(ScheduleService scheduleService) {
+    public ScheduleController(ScheduleService scheduleService, UserService userService) {
         this.scheduleService = scheduleService;
+        this.userService = userService;
     }
 
 
@@ -34,15 +38,22 @@ public class ScheduleController {
     @PostMapping("/schedule/save")
     public String schedule( @ModelAttribute("schedule") ScheduleDto schedule,
                                            BindingResult result,
-                                           Model model) {
+                                           Model model,
+                                            @AuthenticationPrincipal UserDetails userDetails) {
 
         if (result.hasErrors()) {
             model.addAttribute("schedule", schedule);
             return "schedule";
         }
-            scheduleService.book(schedule, schedule.getId());
 
-            return "scheduleSuccess";
+
+           String email= userDetails.getUsername();
+           User user = userService.findUserByEmail(email);
+
+
+            scheduleService.book(schedule,user);
+
+            return "schedule";
         }
 
 
@@ -61,10 +72,14 @@ public class ScheduleController {
     @PostMapping("/schedule/delete")
     public String unbookTerm(@ModelAttribute("schedule") ScheduleDto schedule,
                              BindingResult result,
-                             Model model) {
-        scheduleService.unbook(schedule, schedule.getId());
+                             Model model,
+                             @AuthenticationPrincipal UserDetails userDetails) {
 
-        return "Przekierowanie do info o udanego anulowania rezerwacji";
+        String email= userDetails.getUsername();
+        User user = userService.findUserByEmail(email);
+        scheduleService.unbook(schedule,user);
+
+        return "Przekierowanie info o  udanym anulowaniu rezerwacji";
 
     }
 }
