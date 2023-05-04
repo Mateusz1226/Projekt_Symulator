@@ -1,4 +1,4 @@
-package pl.projekt_symulator.service;
+package pl.projekt_symulator.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

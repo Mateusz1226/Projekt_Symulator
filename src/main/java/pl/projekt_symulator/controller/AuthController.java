@@ -3,12 +3,16 @@ package pl.projekt_symulator.controller;
 
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.UserService;
@@ -19,10 +23,15 @@ import java.util.List;
 @Controller
 public class AuthController {
 
-    private UserService userService;
 
-    public AuthController(UserService userService) {
+
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+
+
+    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
     }
 
  
@@ -36,6 +45,18 @@ public class AuthController {
     public String login(){
         return "login";
     }
+
+
+    @PostMapping ("/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserDto userDto){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return new ResponseEntity<>("success!", HttpStatus.OK);
+
+    }
+
+
 
 
     @GetMapping("/register")
