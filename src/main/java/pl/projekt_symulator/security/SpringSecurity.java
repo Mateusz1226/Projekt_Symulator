@@ -36,7 +36,9 @@ public class SpringSecurity {
                                 .requestMatchers("/calender.html").permitAll()
                                 .requestMatchers("/mail").permitAll()
                                 .requestMatchers("/schedule/**").permitAll()
+                                .requestMatchers("/scheduleDelete/**").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
+
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")

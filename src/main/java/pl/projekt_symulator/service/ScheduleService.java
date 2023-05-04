@@ -1,16 +1,16 @@
 package pl.projekt_symulator.service;
 
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import pl.projekt_symulator.dto.ScheduleDto;
-import pl.projekt_symulator.dto.UserDto;
+
 import pl.projekt_symulator.entity.Schedule;
 
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.mapper.ScheduleMapper;
 import pl.projekt_symulator.mapper.UserMapper;
 import pl.projekt_symulator.repository.ScheduleRepository;
-
-import java.util.Arrays;
 
 @Service
 public class ScheduleService {
@@ -21,11 +21,14 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserService userService;
 
-    public ScheduleService(ScheduleMapper scheduleMapper, UserMapper userMapper, ScheduleRepository scheduleRepository, UserService userService) {
+    private final JavaMailSender mailSender;
+
+    public ScheduleService(ScheduleMapper scheduleMapper, UserMapper userMapper, ScheduleRepository scheduleRepository, UserService userService, JavaMailSender mailSender) {
         this.scheduleMapper = scheduleMapper;
         this.userMapper = userMapper;
         this.scheduleRepository = scheduleRepository;
         this.userService = userService;
+        this.mailSender = mailSender;
     }
 
     public String book(ScheduleDto scheduleDto, Long userId) {
@@ -38,33 +41,58 @@ public class ScheduleService {
         }
 
 
-        Schedule scheduleToEntity = new Schedule();
-        scheduleToEntity.setId(scheduleDto.getId());
-        scheduleToEntity.setStart(scheduleDto.getStart());
-        scheduleToEntity.setEnd(scheduleDto.getEnd());
+        Schedule schedule = new Schedule();
+        schedule.setId(scheduleDto.getId());
+        schedule.setStart(scheduleDto.getStart());
+        schedule.setEnd(scheduleDto.getEnd());
 
         //zabezpieczenie co jakby nie było id w bazie ???
-        User user = userMapper.mapToEntity(userService.findUserById(userId));
+        User user = userService.findUserById(userId);
 
 
-        scheduleToEntity.setUser(user);
-        scheduleRepository.save(scheduleToEntity);
+        schedule.setUser(user);
+        scheduleRepository.save(schedule);
+
+        String mailType = "book";
+        sendEmailAboutReservationStatus(schedule,user,mailType);
 
         return "Termin został zarezerwowany";
     }
 
-    public String unbook(ScheduleDto scheduleDto, Long userId) {
+    public void unbook(ScheduleDto scheduleDto, Long userId) {
 
-        UserDto user = userService.findUserById(userId);
+        User user = userService.findUserById(userId);
           // trzeba wyjąć na poziom kontrollera
-        Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), userMapper.mapToEntity(user));
+        Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), user);
         if (schedule == null) {
             throw new IllegalArgumentException("Nie możesz odwołać tego terminu");
         }
         scheduleRepository.deleteById(schedule.getId());
-        return "Rezerwacja została odwołana";
+
+        String mailType = "unbook";
+
+        sendEmailAboutReservationStatus(schedule,user,mailType);
+
     }
+
+
+
+
+    public void sendEmailAboutReservationStatus(Schedule schedule, User user, String mailType) {
+
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("strzelnicanozyno@gmail.com");
+        message.setTo(user.getEmail());
+        message.setSubject("Symulator strzelecki nożyno potwierdzenie rezerwacji");
+        if (mailType.equals("book")) {
+            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerowanie wiyzty w terimnie od" + schedule.getStart() + " do " + schedule.getEnd()+".");
+            mailSender.send(message);
+            return;
+        }
+        message.setText("Cześć " + user.getFirstName() + ", rezerwacja w terminie " + schedule.getStart() + " do " + schedule.getEnd() + " została anulowana." );
+        mailSender.send(message);
+
+    }
+
 }
-
-
-

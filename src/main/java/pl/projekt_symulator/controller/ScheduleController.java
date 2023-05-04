@@ -38,12 +38,13 @@ public class ScheduleController {
 
         if (result.hasErrors()) {
             model.addAttribute("schedule", schedule);
-            return "/schedule";
+            return "schedule";
         }
             scheduleService.book(schedule, schedule.getId());
 
-            return "zrealizowane";
+            return "scheduleSuccess";
         }
+
 
 
 
@@ -61,6 +62,9 @@ public class ScheduleController {
     public String unbookTerm(@ModelAttribute("schedule") ScheduleDto schedule,
                              BindingResult result,
                              Model model) {
-        return scheduleService.unbook(schedule, schedule.getId());
+        scheduleService.unbook(schedule, schedule.getId());
+
+        return "Przekierowanie do info o udanego anulowania rezerwacji";
+
     }
 }

@@ -88,10 +88,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
-   public UserDto findUserById (Long id) {
-     User user =  userRepository.findById(id).orElse(null);
-
-        return userMapper.mapToDto(user);
+   public User findUserById (Long id) {
+        return userRepository.findById(id).orElse(null) ;
    }
 
     private Role checkRoleExist() {

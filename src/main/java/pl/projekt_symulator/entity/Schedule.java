@@ -21,11 +21,13 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull
     private LocalDate start;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+   // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull
     private LocalDate end;
     @ManyToOne
