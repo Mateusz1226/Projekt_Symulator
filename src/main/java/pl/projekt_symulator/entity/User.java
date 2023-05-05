@@ -62,5 +62,7 @@ public class User
   //  @OneToMany(mappedBy = "user")
  //   private List<Schedule> schedule;
 
-
+    public User(String email) {
+        this.email = email;
+    }
 }

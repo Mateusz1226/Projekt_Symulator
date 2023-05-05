@@ -1,6 +1,7 @@
 package pl.projekt_symulator.controller;
 
 
+import io.swagger.annotations.Api;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import pl.projekt_symulator.service.UserService;
 import java.util.List;
 
 @Controller
+@Api( tags = "Autoryzacja")
 public class AuthController {
 
 

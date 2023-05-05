@@ -2,6 +2,7 @@ package pl.projekt_symulator.service;
 
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -106,7 +108,7 @@ public class UserServiceImpl implements UserService {
         message.setFrom("strzelnicanozyno@gmail.com");
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno - rejestracja");
-        message.setText("Cześć" + user.getFirstName() + " W celu potwierdzenia rejestracji kliknij w poniższy link");
+        message.setText("Cześć " + user.getFirstName() + " W celu potwierdzenia rejestracji kliknij w poniższy link");
 
         mailSender.send(message);
 

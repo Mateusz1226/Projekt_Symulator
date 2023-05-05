@@ -40,4 +40,8 @@ public class UserDto
 
     @Range(min = 8,max = 110, message = "Wpisz poprawny wiek")
     private int age;
+
+    public UserDto(String email) {
+        this.email = email;
+    }
 }

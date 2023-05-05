@@ -39,7 +39,7 @@ public class ScheduleController {
     public String schedule( @ModelAttribute("schedule") ScheduleDto schedule,
                                            BindingResult result,
                                            Model model,
-                                            @AuthenticationPrincipal UserDetails userDetails) {
+                                           @AuthenticationPrincipal UserDetails userDetails) {
 
         if (result.hasErrors()) {
             model.addAttribute("schedule", schedule);
@@ -55,8 +55,6 @@ public class ScheduleController {
 
             return "schedule";
         }
-
-
 
 
     @GetMapping("/scheduleDelete")
