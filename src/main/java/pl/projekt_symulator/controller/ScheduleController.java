@@ -24,7 +24,6 @@ public class ScheduleController {
         this.userService = userService;
     }
 
-
     @GetMapping("/schedule")
     public String showScheduleForm(Model model){
         ScheduleDto scheduleDto = new ScheduleDto();

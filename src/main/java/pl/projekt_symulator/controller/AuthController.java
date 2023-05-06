@@ -36,13 +36,13 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
- 
+
     @GetMapping("/index")
     public String home(){
         return "index";
     }
 
- 
+
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -68,7 +68,7 @@ public class AuthController {
         return "register";
     }
 
-  
+
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
@@ -86,8 +86,8 @@ public class AuthController {
         }
 
         userService.saveUser(userDto);
-      return "redirect:/register?success";
-       // return "redirect:/login";
+        return "redirect:/register?success";
+        // return "redirect:/login";
     }
 
 
