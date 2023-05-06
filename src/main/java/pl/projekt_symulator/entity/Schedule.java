@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @EqualsAndHashCode
@@ -24,17 +25,17 @@ public class Schedule {
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull
-    private LocalDate start;
+    private LocalDateTime start;
 
    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull
-    private LocalDate end;
+    private LocalDateTime end;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Schedule(LocalDate start, LocalDate end, User mapToEntity) {
+    public Schedule(LocalDateTime start, LocalDateTime end, User mapToEntity) {
 
     }
 

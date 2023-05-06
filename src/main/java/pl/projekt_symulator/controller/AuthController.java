@@ -91,7 +91,7 @@ public class AuthController {
     }
 
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String users(Model model){
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);

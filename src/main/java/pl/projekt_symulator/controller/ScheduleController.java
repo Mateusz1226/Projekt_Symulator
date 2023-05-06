@@ -1,15 +1,15 @@
 package pl.projekt_symulator.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
+
 import pl.projekt_symulator.dto.ScheduleDto;
-import pl.projekt_symulator.dto.UserDto;
+
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.ScheduleService;
 import pl.projekt_symulator.service.UserService;

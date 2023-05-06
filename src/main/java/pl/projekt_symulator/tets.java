@@ -2,6 +2,7 @@ package pl.projekt_symulator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -18,5 +19,7 @@ public class tets {
 
         System.out.println(LocalTime.now());
         DateTimeFormat.ISO starta = DateTimeFormat.ISO.DATE;
+
+        System.out.println(LocalDateTime.now());
     }
 }

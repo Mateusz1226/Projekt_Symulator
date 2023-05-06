@@ -1,5 +1,6 @@
 package pl.projekt_symulator.service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,12 @@ import pl.projekt_symulator.mapper.ScheduleMapper;
 import pl.projekt_symulator.mapper.UserMapper;
 import pl.projekt_symulator.repository.ScheduleRepository;
 
+import java.util.Optional;
+
 @Service
 public class ScheduleService {
 
+    // dodanie weryfikacji czy data jest w przedziale od wtorku do niedzieli ?
 
     private final ScheduleMapper scheduleMapper;
     private final UserMapper userMapper;
@@ -62,7 +66,7 @@ public class ScheduleService {
           // trzeba wyjąć na poziom kontrollera
         Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), user);
         if (schedule == null) {
-            throw new IllegalArgumentException("Nie możesz odwołać tego terminu");
+            throw new EmptyResultDataAccessException("Nie możesz odwołać tego terminu, ponieważ nie został jeszcze zarezerwowany",1);
         }
         scheduleRepository.deleteById(schedule.getId());
 
@@ -90,6 +94,10 @@ public class ScheduleService {
         message.setText("Cześć " + user.getFirstName() + ", rezerwacja w terminie " + schedule.getStart() + " do " + schedule.getEnd() + " została anulowana." );
         mailSender.send(message);
 
+    }
+
+    public Optional<Schedule> getScheduleById(Long id) {
+      return scheduleRepository.findById(id);
     }
 
 }

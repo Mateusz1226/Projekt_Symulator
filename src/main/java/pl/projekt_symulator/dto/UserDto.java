@@ -44,4 +44,8 @@ public class UserDto
     public UserDto(String email) {
         this.email = email;
     }
+
+    public UserDto(Long id,String email) {
+        this.email = email;
+    }
 }

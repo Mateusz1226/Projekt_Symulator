@@ -5,13 +5,14 @@ import pl.projekt_symulator.entity.Schedule;
 import pl.projekt_symulator.entity.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    Schedule findByStartAndEnd(LocalDate start, LocalDate end);
+    Schedule findByStartAndEnd(LocalDateTime start, LocalDateTime end);
 
-    Schedule findByStartAndEndAndUser(LocalDate start, LocalDate end, User user);
+    Schedule findByStartAndEndAndUser(LocalDateTime start, LocalDateTime end, User user);
 }
 
 

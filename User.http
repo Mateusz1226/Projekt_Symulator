@@ -30,5 +30,8 @@ Content-Type: application/json
 }
 
 ###
-# @no-redirect
+# @no-redirect schedule
 GET http://localhost:8888/swagger-ui/index.html?trace=true&message=true
+
+###
+GET http://localhost:8888/schedule?trace=true&message=true

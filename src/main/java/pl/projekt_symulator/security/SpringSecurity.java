@@ -46,24 +46,14 @@ public class SpringSecurity {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
-
-
                                 .requestMatchers("/index").permitAll()
                                 .requestMatchers("/calender.html").permitAll()
                                 .requestMatchers("/mail").permitAll()
                                 .requestMatchers("/schedule/**").authenticated()
                                 .requestMatchers("/scheduleDelete/**").permitAll()
-                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/swagger-resources/**", "/swagger-resources", "/v3/api-docs/**", "/proxy/**").permitAll()
-                                .requestMatchers("swagger-ui/index.html#/").permitAll()
-                                .requestMatchers("/swagger-ui/index.html#/").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v2/api-docs/**").permitAll()
-                                .requestMatchers("/swagger-resources/**").permitAll()
-                                .requestMatchers("/swagger-ui/URL").permitAll()
+                                .requestMatchers("/v2/api-docs, /configuration/ui, /swagger-resources/**, /configuration/security,/swagger-ui.html,/webjars/**").permitAll()
 
-
-                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/admin/users").hasRole("ADMIN")
 
                 ).formLogin(
                         form -> form
