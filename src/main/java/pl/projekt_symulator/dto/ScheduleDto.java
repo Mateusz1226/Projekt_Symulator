@@ -1,6 +1,7 @@
 package pl.projekt_symulator.dto;
 
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -15,9 +16,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ScheduleDto {
     private Long Id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @NotEmpty
+   // @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime start;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @NotEmpty
+  //  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime end;
 }
 

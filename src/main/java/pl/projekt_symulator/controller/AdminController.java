@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/api/admin")
+@RequestMapping("/api/simulator/admin")
 public class AdminController {
 
     private final UserService userService;

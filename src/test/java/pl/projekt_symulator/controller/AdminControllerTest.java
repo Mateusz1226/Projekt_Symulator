@@ -13,7 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.service.UserService;
@@ -34,8 +36,9 @@ class AdminControllerTest {
         List<UserDto> users = List.of(
                 new UserDto(1L, "test1@gmail"));
         when(service.findAllUsers()).thenReturn(users);
-        mockMvc.perform(get("/admin/users"))
+        mockMvc.perform(get("/admin/simulator/users"))
                 .andExpect(status().isOk());
 
     }
+
 }
