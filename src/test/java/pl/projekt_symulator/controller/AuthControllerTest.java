@@ -38,15 +38,7 @@ class AuthControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    @Test
-    void testGetAllUsers() throws Exception {
-        List<UserDto> users = List.of(
-                new UserDto(1L, "test1@gmail"));
-        when(service.findAllUsers()).thenReturn(users);
-        mockMvc.perform(get("/admin/users"))
-                .andExpect(status().isOk());
 
-    }
 
     @Test
     void testLogin() throws Exception {

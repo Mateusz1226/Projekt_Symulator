@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" th:href="@{/index}">Registration and Login System</a>
+    <a class="navbar-brand" th:href="@{/index}">Symulator strzelecki nożyno</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -31,11 +31,11 @@
   <div class="row col-md-8 offset-md-2">
     <div class="card">
       <div class="card-header">
-        <h2 class="text-center">Registration</h2>
+        <h2 class="text-center">Rejestracja</h2>
       </div>
       <div th:if="${param.success}">
         <div class="alert alert-info">
-          You have successfully registered our app!
+          Zarejestrowałeś się !
         </div>
       </div>
       <div class="card-body">
@@ -46,12 +46,12 @@
                 th:object="${user}"
         >
           <div class="form-group mb-3">
-            <label class="form-label">First Name</label>
+            <label class="form-label">Imię</label>
             <input
                     class="form-control"
                     id="firstName"
                     name="firstName"
-                    placeholder="Enter first name"
+                    placeholder="Wpisz imię"
                     th:field="*{firstName}"
                     type="text"
             />
@@ -59,12 +59,12 @@
                th:if="${#fields.hasErrors('firstName')}"></p>
           </div>
           <div class="form-group mb-3">
-            <label class="form-label">Last Name</label>
+            <label class="form-label">Nazwisko</label>
             <input
                     class="form-control"
                     id="lastName"
                     name="lastName"
-                    placeholder="Enter last name"
+                    placeholder="Wpisz nazwisko"
                     th:field="*{lastName}"
                     type="text"
             />
@@ -109,7 +109,7 @@
                     class="form-control"
                     id="email"
                     name="email"
-                    placeholder="Enter email address"
+                    placeholder="Wprowadź email"
                     th:field="*{email}"
                     type="email"
             />
@@ -117,12 +117,12 @@
                th:if="${#fields.hasErrors('email')}"></p>
           </div>
           <div class="form-group mb-3">
-            <label class="form-label">Password</label>
+            <label class="form-label">Hasło</label>
             <input
                     class="form-control"
                     id="password"
                     name="password"
-                    placeholder="Enter password"
+                    placeholder="Wprowadź hasło"
                     th:field="*{password}"
                     type="password"
             />
@@ -130,7 +130,7 @@
                th:if="${#fields.hasErrors('password')}"></p>
           </div>
 
-
+          <br>
 
           <div class="checkbox">
             <label>  Zgoda Marketingowa</label>
@@ -146,10 +146,26 @@
                th:if="${#fields.hasErrors('marketingAgreement')}"></p>
           </div>
 
+           <br>
 
+          <div class="checkbox">
+            <label>  Zapoznałem się z regulaminem</label>
+            <input
+
+                    id="StatuteAgreement"
+                    name="StatuteAgreement"
+                    placeholder="Zapoznałem się z regulaminem<"
+                    type="checkbox" required
+
+            />
+            <p th:errors = "*{marketingAgreement}" class="text-danger"
+               th:if="${#fields.hasErrors('marketingAgreement')}"></p>
+          </div>
+
+          <br>
           <div class="form-group">
-            <button class="btn btn-primary" type="submit">Register</button>
-            <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+            <button class="btn btn-primary" type="submit">Zarejestruj się</button>
+            <span>Masz już login? <a th:href="@{/login}">Zaloguj się</a></span>
           </div>
         </form>
       </div>

@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Symulator",version = "1.0", description = "Symulator strzelecki"))
+//@OpenAPIDefinition(info = @Info(title = "Symulator",version = "1.0", description = "Symulator strzelecki"))
 public class ProjektSymulatorApplication {
 
     public static void main(String[] args) {

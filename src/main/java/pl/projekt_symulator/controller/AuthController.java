@@ -22,9 +22,8 @@ import pl.projekt_symulator.service.UserService;
 import java.util.List;
 
 @Controller
-@Api( tags = "Autoryzacja")
+@RequestMapping("/api/simulator")
 public class AuthController {
-
 
 
     private final UserService userService;
@@ -60,7 +59,6 @@ public class AuthController {
 
 
 
-
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         UserDto user = new UserDto();
@@ -90,11 +88,4 @@ public class AuthController {
         // return "redirect:/login";
     }
 
-
-    @GetMapping("/admin/users")
-    public String users(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
 }

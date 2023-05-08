@@ -45,14 +45,14 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
+                        authorize.requestMatchers("/api/simulator/register/**").permitAll()
+                                .requestMatchers("/api/simulator/index").permitAll()
                                 .requestMatchers("/calender.html").permitAll()
                                 .requestMatchers("/mail").permitAll()
-                                .requestMatchers("/schedule/**").authenticated()
-                                .requestMatchers("/scheduleDelete/**").permitAll()
+                                .requestMatchers("/api/simulator/schedule/**").authenticated()
+                                .requestMatchers("/api/simulator/scheduleDelete/**").permitAll()
                                 .requestMatchers(AUTH_SWAGGER).permitAll()
-                                .requestMatchers("/admin/users").hasRole("ADMIN")
+                                .requestMatchers("/api/admin/users").hasRole("ADMIN")
 
                 ).formLogin(
                         form -> form
