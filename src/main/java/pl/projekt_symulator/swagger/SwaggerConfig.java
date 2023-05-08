@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class SwaggerConfig {
    // http://localhost:8888/swagger-ui/index.html#/
     @Bean

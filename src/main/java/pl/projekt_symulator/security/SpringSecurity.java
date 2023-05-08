@@ -51,8 +51,7 @@ public class SpringSecurity {
                                 .requestMatchers("/mail").permitAll()
                                 .requestMatchers("/schedule/**").authenticated()
                                 .requestMatchers("/scheduleDelete/**").permitAll()
-                                .requestMatchers("/v2/api-docs, /configuration/ui, /swagger-resources/**, /configuration/security,/swagger-ui.html,/webjars/**").permitAll()
-
+                                .requestMatchers(AUTH_SWAGGER).permitAll()
                                 .requestMatchers("/admin/users").hasRole("ADMIN")
 
                 ).formLogin(
@@ -69,6 +68,14 @@ public class SpringSecurity {
         return http.build();
     }
 
+    private static final String[] AUTH_SWAGGER = {
+            "/api/v1/auth/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+
+    };
 
 
     @Bean
