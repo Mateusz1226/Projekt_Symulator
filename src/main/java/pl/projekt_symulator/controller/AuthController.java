@@ -45,6 +45,7 @@ public class AuthController {
     }
 
 
+
     @PostMapping ("/login")
     public ResponseEntity<String> loginUser(@RequestBody UserDto userDto){
         Authentication authentication = authenticationManager.authenticate(
@@ -53,7 +54,6 @@ public class AuthController {
         return new ResponseEntity<>("success!", HttpStatus.OK);
 
     }
-
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
@@ -64,7 +64,7 @@ public class AuthController {
 
 
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user") UserDto userDto,
+    public ResponseEntity <String> registration(@Valid @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
                                Model model){
         User existingUser = userService.findUserByEmail(userDto.getEmail());
@@ -76,12 +76,14 @@ public class AuthController {
 
         if(result.hasErrors()){
             model.addAttribute("user", userDto);
-            return "/register";
+         return new   ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
+           // return "/register";
         }
 
         userService.saveUser(userDto);
-        return "redirect:/register?success";
-        // return "redirect:/login";
+       return new   ResponseEntity<String>("success!", HttpStatus.OK);
+       // return "redirect:/register?success";
+
     }
 
 }

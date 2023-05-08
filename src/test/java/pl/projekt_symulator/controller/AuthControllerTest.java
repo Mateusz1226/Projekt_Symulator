@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,22 +43,23 @@ class AuthControllerTest {
 
     @Test
     void testLogin() throws Exception {
-        mockMvc.perform(get("/login").with(user("admin").password("pass").roles("ADMIN,USER")))
+        mockMvc.perform(get("/api/simulator/login").with(user("admin").password("pass").roles("ADMIN,USER")))
                 .andExpect(status().isOk());
 
     }
 
-    @Test
-    void testIndex() throws Exception {
-        mockMvc.perform(get("/index").with(user("admin").password("pass").roles("ADMIN,USER")))
-                .andExpect(status().isOk());
-
-    }
 
 
     @Test
     void testRegistration() throws Exception {
-        mockMvc.perform(get("/register").with(user("admin").password("pass").roles("ADMIN,USER")))
+        mockMvc.perform(get("/api/simulator/register").with(user("admin").password("pass").roles("ADMIN,USER")))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testRegistrationSaveController() throws Exception {
+        mockMvc.perform(post("/api/simulator/register/save").with(user("admin").password("pass").roles("ADMIN,USER")))
                 .andExpect(status().isOk());
 
     }
@@ -73,9 +75,9 @@ class AuthControllerTest {
         userDto.setMarketingAgreement(true);
 
 
-        service.saveUser(userDto);
+       service.saveUser(userDto);
 
-        mockMvc.perform(post("/register/save")
+        mockMvc.perform(post("/api/simulator/register/save")
                         .with(user("admin").password("pass").roles("ADMIN", "USER"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
