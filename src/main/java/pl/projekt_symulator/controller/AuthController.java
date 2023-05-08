@@ -53,9 +53,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new ResponseEntity<>("success!", HttpStatus.OK);
-
-
+        return new   ResponseEntity<String>("success!", HttpStatus.OK);
 
     }
 

@@ -13,7 +13,13 @@ import pl.projekt_symulator.mapper.ScheduleMapper;
 import pl.projekt_symulator.mapper.UserMapper;
 import pl.projekt_symulator.repository.ScheduleRepository;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 public class ScheduleService {
@@ -40,8 +46,16 @@ public class ScheduleService {
 
         Schedule Schedule = scheduleRepository.findByStartAndEnd(scheduleDto.getStart(), scheduleDto.getEnd());
 
-        if ( Schedule != null) {
+        if (Schedule != null) {
             throw new IllegalArgumentException("Termin jest już zajęty");
+        }
+
+        if (termVerification(scheduleDto).equals("BŁĄD")) {
+            throw new IllegalArgumentException("Za krótki okres rezerwacji");
+        }
+
+        if (termVerification(scheduleDto).equals("BŁĄD PONIEDZIAŁEK")) {
+            throw new IllegalArgumentException("Symulator jest zamknięty w poniedziałek");
         }
 
 
@@ -55,28 +69,40 @@ public class ScheduleService {
         scheduleRepository.save(schedule);
 
         String mailType = "book";
-        sendEmailAboutReservationStatus(schedule,user,mailType);
+        sendEmailAboutReservationStatus(schedule, user, mailType);
 
         return "Termin został zarezerwowany";
     }
 
+
+    public String termVerification(ScheduleDto scheduleDto) {
+
+        if (scheduleDto.getStart().getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+            return "BŁĄD PONIEDZIAŁEK";
+        }
+        if (MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) < 60 || MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) > 600) {
+            return "BŁĄD";
+        }
+        return "OK";
+
+    }
+
+
     public void unbook(ScheduleDto scheduleDto, User user) {
 
 
-          // trzeba wyjąć na poziom kontrollera
+        // trzeba wyjąć na poziom kontrollera
         Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), user);
         if (schedule == null) {
-            throw new EmptyResultDataAccessException("Nie możesz odwołać tego terminu, ponieważ nie został jeszcze zarezerwowany",1);
+            throw new EmptyResultDataAccessException("Nie możesz odwołać tego terminu, ponieważ nie został jeszcze zarezerwowany", 1);
         }
         scheduleRepository.deleteById(schedule.getId());
 
         String mailType = "unbook";
 
-        sendEmailAboutReservationStatus(schedule,user,mailType);
+        sendEmailAboutReservationStatus(schedule, user, mailType);
 
     }
-
-
 
 
     public void sendEmailAboutReservationStatus(Schedule schedule, User user, String mailType) {
@@ -87,17 +113,17 @@ public class ScheduleService {
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno potwierdzenie rezerwacji");
         if (mailType.equals("book")) {
-            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od" + schedule.getStart() + " do " + schedule.getEnd()+".");
+            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od" + schedule.getStart() + " do " + schedule.getEnd() + ".");
             mailSender.send(message);
             return;
         }
-        message.setText("Cześć " + user.getFirstName() + ", rezerwacja w terminie " + schedule.getStart() + " do " + schedule.getEnd() + " została anulowana." );
+        message.setText("Cześć " + user.getFirstName() + ", rezerwacja w terminie " + schedule.getStart() + " do " + schedule.getEnd() + " została anulowana.");
         mailSender.send(message);
 
     }
 
     public Optional<Schedule> getScheduleById(Long id) {
-      return scheduleRepository.findById(id);
+        return scheduleRepository.findById(id);
     }
 
 }

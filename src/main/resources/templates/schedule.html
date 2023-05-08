@@ -53,7 +53,7 @@
                     name="start"
                     placeholder="Enter start"
                     th:field="*{start}"
-                    type="date"
+                    type="text"
             />
             <p th:errors = "*{start}" class="text-danger"
                th:if="${#fields.hasErrors('start')}"></p>
@@ -66,7 +66,7 @@
                     name="stop"
                     placeholder="Enter last name"
                     th:field="*{end}"
-                    type="date"
+                    type="text"
             />
             <p th:errors = "*{end}" class="text-danger"
                th:if="${#fields.hasErrors('end')}"></p>

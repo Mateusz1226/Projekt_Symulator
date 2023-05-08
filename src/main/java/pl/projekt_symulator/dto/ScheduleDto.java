@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class ScheduleDto {
     private Long Id;
     @NotEmpty
-   // @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime start;
     @NotEmpty
   //  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
