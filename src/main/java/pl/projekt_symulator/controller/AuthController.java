@@ -1,9 +1,8 @@
 package pl.projekt_symulator.controller;
 
 
-import io.swagger.annotations.Api;
-import jakarta.validation.Valid;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +17,6 @@ import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.UserService;
 
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/api/simulator")
@@ -56,7 +53,6 @@ public class AuthController {
         return new ResponseEntity<>("success!", HttpStatus.OK);
 
     }
-
 
 
     @GetMapping("/register")

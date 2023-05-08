@@ -47,6 +47,13 @@ class AuthControllerTest {
 
     }
 
+    @Test
+    void testIndex() throws Exception {
+        mockMvc.perform(get("/index").with(user("admin").password("pass").roles("ADMIN,USER")))
+                .andExpect(status().isOk());
+
+    }
+
 
     @Test
     void testRegistration() throws Exception {
