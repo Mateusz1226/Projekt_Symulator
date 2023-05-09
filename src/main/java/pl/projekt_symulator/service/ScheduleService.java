@@ -1,6 +1,6 @@
 package pl.projekt_symulator.service;
 
-import org.springframework.dao.EmptyResultDataAccessException;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ import pl.projekt_symulator.mapper.UserMapper;
 import pl.projekt_symulator.repository.ScheduleRepository;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
@@ -146,6 +146,15 @@ public class ScheduleService {
         mailSender.send(message);
 
     }
+
+    public List<ScheduleDto> fullSchedule() {
+        List<Schedule> fullSchedule = scheduleRepository.findAll();
+        return fullSchedule.stream()
+                .map((schedule) -> scheduleMapper.mapToDto(schedule))
+                .collect(Collectors.toList());
+
+    }
+
 
     public Optional<Schedule> getScheduleById(Long id) {
         return scheduleRepository.findById(id);

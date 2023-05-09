@@ -2,27 +2,17 @@ package pl.projekt_symulator.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.projekt_symulator.dto.ScheduleDto;
-import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.Schedule;
 import pl.projekt_symulator.entity.User;
-import pl.projekt_symulator.mapper.MarketingDataMapper;
 import pl.projekt_symulator.mapper.ScheduleMapper;
 import pl.projekt_symulator.mapper.UserMapper;
-import pl.projekt_symulator.repository.MarketingRepository;
-import pl.projekt_symulator.repository.RoleRepository;
 import pl.projekt_symulator.repository.ScheduleRepository;
-import pl.projekt_symulator.repository.UserRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -32,10 +22,10 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @DataJpaTest
 
-class ScheduleServiceTest {
+class ScheduleRepositoryTest {
 
 
-    private ScheduleService service;
+    private pl.projekt_symulator.service.ScheduleService service;
     private ScheduleRepository repository;
 
     private UserServiceImpl userService;
@@ -55,7 +45,7 @@ class ScheduleServiceTest {
         userMapper = mock(UserMapper.class);
         mailSender = mock(JavaMailSender.class);
 
-        service = new ScheduleService(scheduleMapper, userMapper, repository, userService, mailSender);
+        service = new pl.projekt_symulator.service.ScheduleService(scheduleMapper, userMapper, repository, userService, mailSender);
     }
 
 

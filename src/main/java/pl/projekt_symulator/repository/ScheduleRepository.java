@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.projekt_symulator.entity.Schedule;
 import pl.projekt_symulator.entity.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
