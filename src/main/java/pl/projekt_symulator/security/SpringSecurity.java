@@ -53,13 +53,13 @@ public class SpringSecurity {
                                 .requestMatchers("/api/simulator/schedule/**").authenticated()
                                 .requestMatchers("/api/simulator/scheduleDelete/**").permitAll()
                                 .requestMatchers(AUTH_SWAGGER).permitAll()
-                                .requestMatchers("/api/admin/users").hasRole("ADMIN")
+                                .requestMatchers("/api/simulator/admin/**").hasRole("ADMIN")
 
                 ).formLogin(
                         form -> form
-                                .loginPage("/login")
+                                .loginPage("/api/simulator/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/schedule")
+                                .defaultSuccessUrl("/api/simulator/schedule")
                                 .permitAll()
                 ).logout(
                         logout -> logout
