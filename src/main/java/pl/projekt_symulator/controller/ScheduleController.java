@@ -52,13 +52,13 @@ public class ScheduleController {
         String email = userDetails.getUsername();
         User user = userService.findUserByEmail(email);
 
-        String response =  scheduleService.book(schedule, user);
+        String response = scheduleService.book(schedule, user);
         // return "schedule";
-        return new ResponseEntity<String>(response, HttpStatus.OK);
+        return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/scheduleDelete")
-    public String showscheduleDeleteForm(Model model) {
+    public String showScheduleDeleteForm(Model model) {
         ScheduleDto scheduleDto = new ScheduleDto();
         model.addAttribute("scheduleDto", scheduleDto);
 
@@ -67,10 +67,10 @@ public class ScheduleController {
 
 
     @PostMapping("/schedule/delete")
-    public ResponseEntity<String> unbookTerm(@ModelAttribute("schedule") ScheduleDto schedule,
-                                             BindingResult result,
-                                             Model model,
-                                             @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<String> cancelAppointment(@ModelAttribute("schedule") ScheduleDto schedule,
+                                                    BindingResult result,
+                                                    Model model,
+                                                    @AuthenticationPrincipal UserDetails userDetails) {
 
 
         if (result.hasErrors()) {
@@ -81,9 +81,9 @@ public class ScheduleController {
 
         String email = userDetails.getUsername();
         User user = userService.findUserByEmail(email);
-        scheduleService.unbook(schedule, user);
+        String response = scheduleService.unbook(schedule, user);
 
-        return new ResponseEntity<String>("Termin został anulowany", HttpStatus.OK);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
 
     }
 }

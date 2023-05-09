@@ -72,7 +72,35 @@ public class ScheduleService {
     }
 
 
+
+
+    public String unbook(ScheduleDto scheduleDto, User user) {
+
+
+        Schedule schedule = scheduleRepository.findByStartAndEnd(scheduleDto.getStart(), scheduleDto.getEnd());
+        if (schedule == null) {
+          //  throw new EmptyResultDataAccessException("Nie możesz odwołać tego terminu, ponieważ nie został jeszcze zarezerwowany", 1);
+            return "Nie możesz odwołać tego terminu, ponieważ nie został jeszcze zarezerwowany";
+        }
+        if (!schedule.getUser().getId().equals(user.getId())){
+            return "Nie możesz odwołać tego terminu, ponieważ został zarezerwowany przez inną osobę";
+        }
+
+
+        scheduleRepository.deleteById(schedule.getId());
+        String mailType = "unbook";
+        sendEmailAboutReservationStatus(schedule, user, mailType);
+        return "Anulowano termin";
+    }
+
+
+
+
     public String termVerification(ScheduleDto scheduleDto) {
+
+        // jak sprawdzić, czy wskazana data nie mieści się już w dacie innej rezerwacji
+        // ?? może za pomocą pętli pobierać wszystkie rezerwacje i sprawdzać, czy ta nowa znajduje się w przedziale ??
+
 
         if (scheduleDto.getStart().getDayOfWeek().equals(DayOfWeek.MONDAY)) {
             return "Symulator jest zamknięty w poniedziałek";
@@ -88,29 +116,13 @@ public class ScheduleService {
             return "Nie można rezerwować dat przeszłych";
         }
 
-        if (scheduleDto.getStart().getHour() <9 || scheduleDto.getEnd().getHour() >20) {
+        if (scheduleDto.getStart().getHour() <12 || scheduleDto.getEnd().getHour() >20) {
             return "Rezerwacja poza godzinami pracy";
         }
         return "OK";
 
     }
 
-
-    public void unbook(ScheduleDto scheduleDto, User user) {
-
-
-        // trzeba wyjąć na poziom kontrollera
-        Schedule schedule = scheduleRepository.findByStartAndEndAndUser(scheduleDto.getStart(), scheduleDto.getEnd(), user);
-        if (schedule == null) {
-            throw new EmptyResultDataAccessException("Nie możesz odwołać tego terminu, ponieważ nie został jeszcze zarezerwowany", 1);
-        }
-        scheduleRepository.deleteById(schedule.getId());
-
-        String mailType = "unbook";
-
-        sendEmailAboutReservationStatus(schedule, user, mailType);
-
-    }
 
 
     public void sendEmailAboutReservationStatus(Schedule schedule, User user, String mailType) {

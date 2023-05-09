@@ -75,7 +75,7 @@ class AuthControllerTest {
         userDto.setMarketingAgreement(true);
 
 
-       service.saveUser(userDto);
+      when(service.saveUser(userDto)).thenReturn("Dodano użytkownika");
 
         mockMvc.perform(post("/api/simulator/register/save")
                         .with(user("admin").password("pass").roles("ADMIN", "USER"))

@@ -2,7 +2,6 @@ package pl.projekt_symulator.service;
 
 
 
-import lombok.AllArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,6 @@ import pl.projekt_symulator.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void saveUser(UserDto userDto) {
+    public String saveUser(UserDto userDto) {
 
         User user = userMapper.mapToEntity(userDto);
         user.setFirstName(user.getFirstName());
@@ -56,9 +54,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role role = roleRepository.findByName("ROLE_ADMIN");
-        if (role == null) {
-            role = checkRoleExist();
-        }
+
+
         user.setRoles(Arrays.asList(role));
         user.setActive(true);
         userRepository.save(user);
@@ -73,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
         sendEmail(user);
 
-
+       return "Dodano użytkownika";
     }
 
     @Override
@@ -94,11 +91,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElse(null) ;
    }
 
-    private Role checkRoleExist() {
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
-    }
+
 
 
     public void sendEmail(User user) {

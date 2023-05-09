@@ -53,7 +53,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new   ResponseEntity<String>("success!", HttpStatus.OK);
+        return new ResponseEntity<String>("success!", HttpStatus.OK);
 
     }
 
@@ -82,8 +82,8 @@ public class AuthController {
            // return "/register";
         }
 
-        userService.saveUser(userDto);
-       return new   ResponseEntity<String>("success!", HttpStatus.OK);
+        String response =  userService.saveUser(userDto);
+        return new  ResponseEntity<String>(response, HttpStatus.CREATED);
        // return "redirect:/register?success";
 
     }

@@ -7,7 +7,7 @@ import pl.projekt_symulator.entity.User;
 import java.util.List;
 
 public interface UserService {
-    void saveUser(UserDto userDto);
+    String saveUser(UserDto userDto);
 
     User findUserByEmail(String email);
 

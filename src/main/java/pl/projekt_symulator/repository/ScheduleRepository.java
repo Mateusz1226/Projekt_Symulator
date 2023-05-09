@@ -12,6 +12,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     Schedule findByStartAndEnd(LocalDateTime start, LocalDateTime end);
 
+
     Schedule findByStartAndEndAndUser(LocalDateTime start, LocalDateTime end, User user);
 }
 

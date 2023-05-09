@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 
@@ -15,22 +15,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "booked_schedules")
+@Table(name = "booked_appointments")
 public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+
+    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @NotNull
+    private LocalDateTime end;
+
+
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
     private LocalDateTime start;
 
-   // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @NotNull
-    private LocalDateTime end;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
