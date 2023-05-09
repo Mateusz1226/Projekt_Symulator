@@ -17,6 +17,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -24,7 +25,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 @Service
 public class ScheduleService {
 
-    // dodanie weryfikacji czy data jest w przedziale od wtorku do niedzieli ?
+
 
     private final ScheduleMapper scheduleMapper;
     private final UserMapper userMapper;
@@ -41,21 +42,17 @@ public class ScheduleService {
         this.mailSender = mailSender;
     }
 
-    public String book(ScheduleDto scheduleDto, User user) {
+    public String book(ScheduleDto scheduleDto, User user)  {
 
 
         Schedule Schedule = scheduleRepository.findByStartAndEnd(scheduleDto.getStart(), scheduleDto.getEnd());
 
         if (Schedule != null) {
-            throw new IllegalArgumentException("Termin jest już zajęty");
+            return("Termin jest już zajęty");
         }
 
-        if (termVerification(scheduleDto).equals("BŁĄD")) {
-            throw new IllegalArgumentException("Za krótki okres rezerwacji");
-        }
-
-        if (termVerification(scheduleDto).equals("BŁĄD PONIEDZIAŁEK")) {
-            throw new IllegalArgumentException("Symulator jest zamknięty w poniedziałek");
+        if (!termVerification(scheduleDto).equals("OK")) {
+            return termVerification(scheduleDto);
         }
 
 
@@ -78,10 +75,21 @@ public class ScheduleService {
     public String termVerification(ScheduleDto scheduleDto) {
 
         if (scheduleDto.getStart().getDayOfWeek().equals(DayOfWeek.MONDAY)) {
-            return "BŁĄD PONIEDZIAŁEK";
+            return "Symulator jest zamknięty w poniedziałek";
         }
-        if (MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) < 60 || MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) > 600) {
-            return "BŁĄD";
+        if (MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) < 60 ) {
+            return "Za krótki okres rezerwacji";
+        }
+        if ( MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) > 600) {
+            return "Za długi okres rezerwacji";
+        }
+
+        if (LocalDateTime.now().isAfter(scheduleDto.getStart())){
+            return "Nie można rezerwować dat przeszłych";
+        }
+
+        if (scheduleDto.getStart().getHour() <9 || scheduleDto.getEnd().getHour() >20) {
+            return "Rezerwacja poza godzinami pracy";
         }
         return "OK";
 
@@ -108,16 +116,21 @@ public class ScheduleService {
     public void sendEmailAboutReservationStatus(Schedule schedule, User user, String mailType) {
 
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String start = schedule.getStart().format(formatter);
+        String end = schedule.getEnd().format(formatter);
+
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("strzelnicanozyno@gmail.com");
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno potwierdzenie rezerwacji");
         if (mailType.equals("book")) {
-            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od" + schedule.getStart() + " do " + schedule.getEnd() + ".");
+            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od" + start + " do " + end + ".");
             mailSender.send(message);
             return;
         }
-        message.setText("Cześć " + user.getFirstName() + ", rezerwacja w terminie " + schedule.getStart() + " do " + schedule.getEnd() + " została anulowana.");
+        message.setText("Cześć " + user.getFirstName() + ", rezerwacja w terminie " + start + " do " + end + " została anulowana.");
         mailSender.send(message);
 
     }

@@ -33,7 +33,7 @@ class AdminControllerTest {
         List<UserDto> users = List.of(
                 new UserDto(1L, "test1@gmail"));
         when(service.findAllUsers()).thenReturn(users);
-        mockMvc.perform(get("/api/admin/simulator/users"))
+        mockMvc.perform(get("/api/simulator/admin/users"))
                 .andExpect(status().isOk());
 
     }

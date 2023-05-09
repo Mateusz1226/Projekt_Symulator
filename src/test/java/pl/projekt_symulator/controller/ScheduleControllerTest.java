@@ -9,6 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.projekt_symulator.service.ScheduleService;
 import pl.projekt_symulator.service.UserService;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,8 +39,11 @@ class ScheduleControllerTest {
 
     }
 
+    @Test
+    void testPostScheduleController() throws Exception {
 
 
+    }
    // yyyy-MM-dd'T'HH:mm
 
 }

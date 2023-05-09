@@ -37,7 +37,7 @@ public class ScheduleController {
 
     //Authentication authentication)
 
-    @PostMapping("/schedule/save")
+    @PostMapping("/schedule")
     public ResponseEntity<String> schedule(@ModelAttribute("schedule") ScheduleDto schedule,
                                            BindingResult result,
                                            Model model,
@@ -52,11 +52,9 @@ public class ScheduleController {
         String email = userDetails.getUsername();
         User user = userService.findUserByEmail(email);
 
-
-        scheduleService.book(schedule, user);
-
+        String response =  scheduleService.book(schedule, user);
         // return "schedule";
-        return new ResponseEntity<String>("Termin został zarezerwowany", HttpStatus.OK);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
     @GetMapping("/scheduleDelete")

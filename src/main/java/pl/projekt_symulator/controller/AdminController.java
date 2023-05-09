@@ -29,6 +29,7 @@ public class AdminController {
 
 
     // funkcjonalność umożliwiająca sortowanie użytkowników i wysyłkę masową maili
+    // funkcjonalność pełen grafik
 
 }
 
