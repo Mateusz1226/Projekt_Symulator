@@ -39,8 +39,6 @@ class AuthControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
-
-
     @Test
     void testLogin() throws Exception {
         mockMvc.perform(get("/api/simulator/login").with(user("admin").password("pass").roles("ADMIN,USER")))

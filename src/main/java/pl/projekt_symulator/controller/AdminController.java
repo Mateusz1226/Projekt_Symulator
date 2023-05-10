@@ -39,7 +39,7 @@ public class AdminController {
     @GetMapping("/fullSchedule")
     public String fullSchedule(Model model){
         List<ScheduleDto> fullSchedule = scheduleService.fullSchedule();
-        model.addAttribute("schedule", fullSchedule);
+        model.addAttribute("fullSchedule", fullSchedule);
         return "fullSchedule";
 
     }
