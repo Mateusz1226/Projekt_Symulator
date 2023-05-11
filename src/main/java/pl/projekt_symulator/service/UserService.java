@@ -17,6 +17,6 @@ public interface UserService {
 
     void  deleteUserWithAppointments(UserDto userDto);
 
-    String updatePassword(UserDto userDto, String password);
+    String updateUser(UserDto userDto, Long id);
 
 }

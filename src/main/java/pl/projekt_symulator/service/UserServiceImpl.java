@@ -1,11 +1,14 @@
 package pl.projekt_symulator.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.MarketingData;
 import pl.projekt_symulator.entity.Role;
@@ -18,6 +21,7 @@ import pl.projekt_symulator.repository.RoleRepository;
 import pl.projekt_symulator.repository.UserRepository;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,12 +64,12 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findByName("ROLE_ADMIN");
 
 
-        user.setRoles(Arrays.asList(role));
+        user.setRoles(Collections.singletonList(role));
         user.setActive(true);
         userRepository.save(user);
 
         MarketingData marketingDataUser = marketingMapper.mapToEntity(userDto);
-        // MarketingData marketingData = new MarketingData();
+
         marketingDataUser.setUser(user);
         marketingDataUser.setAge(marketingDataUser.getAge());
         marketingDataUser.setPhoneNumber(marketingDataUser.getPhoneNumber());
@@ -91,17 +95,14 @@ public class UserServiceImpl implements UserService {
         String DELETE_USER_ROLE = "DELETE FROM users_roles where user_id ="+user.getId() ;
         jdbcTemplate.update(DELETE_USER_ROLE);
 
-    //   Optional<Schedule> schedule = scheduleService.findScheduleByUserID(userDto.getId());
-    //    if (schedule != null) {
-    //        scheduleService.deleteAllUserAppointments(userDto);
-   //     }
-
         String DELETE_USER = "DELETE FROM users where id ="+user.getId() ;
         jdbcTemplate.update(DELETE_USER);
 
        // userRepository.deleteById(userDto.getId());
 
     }
+
+
 
     @Override
     public User findUserByEmail(String email) {
@@ -129,22 +130,40 @@ public class UserServiceImpl implements UserService {
         message.setFrom("strzelnicanozyno@gmail.com");
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno - rejestracja");
+
         message.setText("Cześć " + user.getFirstName() + " W celu potwierdzenia rejestracji kliknij w poniższy link");
+
         mailSender.send(message);
 
     }
 
 
-    public String updatePassword(UserDto userDto, String password) {
+    public String updateUser(UserDto userDto, Long id) {
+        Assert.notNull(userDto.getId(), "Id nie może być puste");
+        User user = userRepository.findById(id).orElseThrow (()-> new EntityNotFoundException(" Brak wskazanego id  " + id));
 
-        if (userDto.getPassword().equals(password)) {
-            return "Wskazane hasło już istnieje";
+        if (!userDto.getId().equals(id)){
+            return "dane id się nie zgadzają";
         }
 
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return "Hasło zostało zmienione";
+        MarketingData marketingDataUser = marketingRepository.findByUserId(user.getId());
+
+
+            marketingDataUser.setUser(user);
+            marketingDataUser.setAge(marketingDataUser.getAge());
+            marketingDataUser.setPhoneNumber(marketingDataUser.getPhoneNumber());
+            marketingDataUser.setMarketingAgreement(marketingDataUser.getMarketingAgreement());
+
+
+        return "Dane zostały zmodyfikowane";
+
     }
+
 }
 
 

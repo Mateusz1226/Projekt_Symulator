@@ -1,6 +1,6 @@
 package pl.projekt_symulator.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.projekt_symulator.dto.ScheduleDto;
+
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.Schedule;
 import pl.projekt_symulator.entity.User;
-import pl.projekt_symulator.mapper.ScheduleMapper;
+
 import pl.projekt_symulator.service.ScheduleService;
 import pl.projekt_symulator.service.UserService;
 
@@ -83,7 +83,8 @@ public class AdminController {
 
     }
 
-    // funkcjonalność umożliwiająca sortowanie użytkowników i wysyłkę masową maili
+
 
 }
 
+// funkcjonalność umożliwiająca sortowanie użytkowników i wysyłkę masową maili

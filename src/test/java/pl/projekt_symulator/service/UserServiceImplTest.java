@@ -151,7 +151,7 @@ class UserServiceImplTest {
         userDto.setEmail("email@.pl");
 
         service.saveUser(userDto);
-        service.deleteUser(userDto);
+
     }
 
 }

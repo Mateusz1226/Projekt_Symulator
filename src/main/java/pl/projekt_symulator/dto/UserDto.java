@@ -5,9 +5,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
-
 
 @Data
 @NoArgsConstructor
@@ -30,7 +31,7 @@ public class UserDto
 
 
     private Boolean marketingAgreement;
-   // @Length(min = 9,max = 12, message = "Proszę wpisać poprawny numer telefonu")
+   // @Length(min = 9,max = 12, message = "Wpisz poprawny numer telefonu")
     @Pattern(regexp = "\\d{9}",message = "Wpisz poprawny numer telefonu")
     private String phoneNumber;
 
