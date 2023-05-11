@@ -33,7 +33,6 @@ class UserRepositoryTest {
 
 
 
-
      @Test
      public void find_by_email_then_return_user() {
 
@@ -53,7 +52,6 @@ class UserRepositoryTest {
      when(userRepository.findByEmail("mateuszkonkel132@gmail.com")).thenReturn(user);
 
      User result =  userRepository.findByEmail("mateuszkonkel132@gmail.com");
-
 
 
     }

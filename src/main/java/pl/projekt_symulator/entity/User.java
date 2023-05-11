@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 
 
 import java.util.ArrayList;
@@ -59,8 +55,8 @@ public class User
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private MarketingData marketingData;
 
-  //  @OneToMany(mappedBy = "user")
- //   private List<Schedule> schedule;
+   // @OneToMany(mappedBy = "user")
+  //  private List<Schedule> schedule;
 
     public User(String email) {
         this.email = email;

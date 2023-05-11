@@ -61,6 +61,7 @@ public class SpringSecurity {
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/api/simulator/schedule")
                                 .permitAll()
+
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

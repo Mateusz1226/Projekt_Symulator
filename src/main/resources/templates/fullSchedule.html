@@ -35,14 +35,14 @@
     <tr>
       <th>Początek rezerwacji</th>
       <th>Koniec rezerwacji</th>
+      <th>Klient</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="ment : ${fullSchedule.sort(schedule.getStart())}">
     <tr th:each = "schedule :${fullSchedule}">
       <td th:text = "${schedule.getStart()}"></td>
       <td th:text = "${schedule.getEnd()}"></td>
-
+      <td th:text = "${schedule.getUser().getFirstName()}"></td>
     </tr>
     </tbody>
   </table>

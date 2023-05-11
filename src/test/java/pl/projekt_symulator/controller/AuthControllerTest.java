@@ -71,7 +71,7 @@ class AuthControllerTest {
         userDto.setPhoneNumber("555666555");
         userDto.setAge(44);
         userDto.setMarketingAgreement(true);
-
+        userDto.setId(1L);
 
       when(service.saveUser(userDto)).thenReturn("Dodano użytkownika");
 

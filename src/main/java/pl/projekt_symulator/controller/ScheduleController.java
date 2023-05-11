@@ -57,7 +57,7 @@ public class ScheduleController {
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/scheduleDelete")
+    @GetMapping("/schedule/delete")
     public String showScheduleDeleteForm(Model model) {
         ScheduleDto scheduleDto = new ScheduleDto();
         model.addAttribute("scheduleDto", scheduleDto);

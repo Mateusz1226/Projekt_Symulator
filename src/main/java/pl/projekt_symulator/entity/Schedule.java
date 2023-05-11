@@ -4,18 +4,20 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
 
 
-@EqualsAndHashCode
-@Getter
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "booked_appointments")
+
 public class Schedule {
 
     @Id

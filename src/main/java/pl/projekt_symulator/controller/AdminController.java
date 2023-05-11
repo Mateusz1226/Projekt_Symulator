@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.projekt_symulator.dto.ScheduleDto;
 import pl.projekt_symulator.dto.UserDto;
+import pl.projekt_symulator.entity.Schedule;
 import pl.projekt_symulator.mapper.ScheduleMapper;
 import pl.projekt_symulator.service.ScheduleService;
 import pl.projekt_symulator.service.UserService;
@@ -19,13 +20,12 @@ public class AdminController {
 
      private final UserService userService;
      private final ScheduleService scheduleService;
-     private final ScheduleMapper scheduleMapper;
 
-    public AdminController(UserService userService, ScheduleService scheduleService, ScheduleMapper scheduleMapper) {
+
+    public AdminController(UserService userService, ScheduleService scheduleService) {
         this.userService = userService;
         this.scheduleService = scheduleService;
 
-        this.scheduleMapper = scheduleMapper;
     }
 
 
@@ -38,7 +38,7 @@ public class AdminController {
 
     @GetMapping("/fullSchedule")
     public String fullSchedule(Model model){
-        List<ScheduleDto> fullSchedule = scheduleService.fullSchedule();
+        List<Schedule> fullSchedule = scheduleService.fullSchedule();
         model.addAttribute("fullSchedule", fullSchedule);
         return "fullSchedule";
 
