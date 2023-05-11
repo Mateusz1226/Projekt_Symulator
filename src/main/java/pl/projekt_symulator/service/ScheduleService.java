@@ -1,12 +1,12 @@
 package pl.projekt_symulator.service;
 
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import pl.projekt_symulator.dto.ScheduleDto;
 
-import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.Schedule;
 
 import pl.projekt_symulator.entity.User;
@@ -17,19 +17,14 @@ import pl.projekt_symulator.repository.ScheduleRepository;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 public class ScheduleService {
 
-
+    private final JdbcTemplate jdbcTemplate;
     private final ScheduleMapper scheduleMapper;
     private final UserMapper userMapper;
     private final ScheduleRepository scheduleRepository;
@@ -37,7 +32,8 @@ public class ScheduleService {
 
     private final JavaMailSender mailSender;
 
-    public ScheduleService(ScheduleMapper scheduleMapper, UserMapper userMapper, ScheduleRepository scheduleRepository, UserService userService, JavaMailSender mailSender) {
+    public ScheduleService(JdbcTemplate jdbcTemplate, ScheduleMapper scheduleMapper, UserMapper userMapper, ScheduleRepository scheduleRepository, UserService userService, JavaMailSender mailSender) {
+        this.jdbcTemplate = jdbcTemplate;
         this.scheduleMapper = scheduleMapper;
         this.userMapper = userMapper;
         this.scheduleRepository = scheduleRepository;
@@ -99,11 +95,19 @@ public class ScheduleService {
 
         // jak sprawdzić, czy wskazana data nie mieści się już w dacie innej rezerwacji
         // ?? może za pomocą pętli pobierać wszystkie rezerwacje i sprawdzać, czy ta nowa znajduje się w przedziale ??
-
+        if (LocalDateTime.now().isAfter(scheduleDto.getStart())) {
+            return "Nie można rezerwować dat przeszłych";
+        }
 
         if (scheduleDto.getStart().getDayOfWeek().equals(DayOfWeek.MONDAY)) {
             return "Symulator jest zamknięty w poniedziałek";
         }
+
+        if (scheduleDto.getStart().getHour() < 12 || scheduleDto.getEnd().getHour() >= 20) {
+            return "Rezerwacja poza godzinami pracy";
+        }
+
+
         if (MINUTES.between(scheduleDto.getStart(), scheduleDto.getEnd()) < 60) {
             return "Za krótki okres rezerwacji";
         }
@@ -111,13 +115,7 @@ public class ScheduleService {
             return "Za długi okres rezerwacji";
         }
 
-        if (LocalDateTime.now().isAfter(scheduleDto.getStart())) {
-            return "Nie można rezerwować dat przeszłych";
-        }
 
-        if (scheduleDto.getStart().getHour() < 12 || scheduleDto.getEnd().getHour() > 20) {
-            return "Rezerwacja poza godzinami pracy";
-        }
         return "OK";
 
     }
@@ -146,15 +144,30 @@ public class ScheduleService {
     }
 
     public List<Schedule> fullSchedule() {
+
         List<Schedule> fullSchedule = scheduleRepository.findAll();
-
-
-
         return new ArrayList<>(fullSchedule);
 
     }
 
 
+   public void deleteAllUserAppointments(User user){
+
+     List <Schedule> schedule =  scheduleRepository.findByUserId(user.getId());
+        if (schedule == null){
+            return;
+        }
+
+       String DELETE_USER_APPOINTMENTS = "DELETE FROM booked_appointments where USER_ID ="+user.getId() ;
+       jdbcTemplate.update(DELETE_USER_APPOINTMENTS);
+
+      //  scheduleRepository.deleteAllById(Collections.singleton(user.getId()));
+
+   }
+
+   public Optional<Schedule>findScheduleByUserID(Long id){
+     return  scheduleRepository.findById(id);
+   }
 
 
     public Optional<Schedule> getScheduleById(Long id) {

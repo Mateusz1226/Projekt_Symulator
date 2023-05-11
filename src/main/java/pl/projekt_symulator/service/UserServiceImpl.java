@@ -1,7 +1,7 @@
 package pl.projekt_symulator.service;
 
 
-
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.MarketingData;
 import pl.projekt_symulator.entity.Role;
+import pl.projekt_symulator.entity.Schedule;
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.mapper.MarketingDataMapper;
 import pl.projekt_symulator.mapper.UserMapper;
@@ -16,15 +17,17 @@ import pl.projekt_symulator.repository.MarketingRepository;
 import pl.projekt_symulator.repository.RoleRepository;
 import pl.projekt_symulator.repository.UserRepository;
 
-
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
 
+@Service
 public class UserServiceImpl implements UserService {
 
+
+    private final  JdbcTemplate jdbcTemplate;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,7 +36,8 @@ public class UserServiceImpl implements UserService {
     private final MarketingDataMapper marketingMapper;
     private final JavaMailSender mailSender;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, MarketingRepository marketingRepository, UserMapper userMapper, MarketingDataMapper marketingMapper, JavaMailSender mailSender) {
+    public UserServiceImpl( JdbcTemplate jdbcTemplate, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, MarketingRepository marketingRepository, UserMapper userMapper, MarketingDataMapper marketingMapper, JavaMailSender mailSender) {
+        this.jdbcTemplate = jdbcTemplate;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -70,7 +74,33 @@ public class UserServiceImpl implements UserService {
 
         sendEmail(user);
 
-       return "Dodano użytkownika";
+        return "Dodano użytkownika";
+    }
+
+    public void deleteUserWithAppointments(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+
+        MarketingData marketingData = marketingRepository.findByUserId(user.getId());
+        if(marketingData != null) {
+            String DELETE_MARKETING_DATA = "DELETE FROM marketing_datas where user_id ="+user.getId() ;
+            jdbcTemplate.update(DELETE_MARKETING_DATA);
+
+        // marketingRepository.deleteById(marketingData.getId());
+      }
+
+        String DELETE_USER_ROLE = "DELETE FROM users_roles where user_id ="+user.getId() ;
+        jdbcTemplate.update(DELETE_USER_ROLE);
+
+    //   Optional<Schedule> schedule = scheduleService.findScheduleByUserID(userDto.getId());
+    //    if (schedule != null) {
+    //        scheduleService.deleteAllUserAppointments(userDto);
+   //     }
+
+        String DELETE_USER = "DELETE FROM users where id ="+user.getId() ;
+        jdbcTemplate.update(DELETE_USER);
+
+       // userRepository.deleteById(userDto.getId());
+
     }
 
     @Override
@@ -87,11 +117,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-   public User findUserById (Long id) {
-        return userRepository.findById(id).orElse(null) ;
-   }
-
-
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
 
     public void sendEmail(User user) {
@@ -102,9 +130,21 @@ public class UserServiceImpl implements UserService {
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno - rejestracja");
         message.setText("Cześć " + user.getFirstName() + " W celu potwierdzenia rejestracji kliknij w poniższy link");
-
         mailSender.send(message);
 
     }
 
+
+    public String updatePassword(UserDto userDto, String password) {
+
+        if (userDto.getPassword().equals(password)) {
+            return "Wskazane hasło już istnieje";
+        }
+
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        return "Hasło zostało zmienione";
+    }
 }
+
+

@@ -46,12 +46,12 @@
                 th:object="${scheduleDto}"
         >
           <div class="form-group mb-3">
-            <label class="form-label">start</label>
+            <label class="form-label">Początek wizyty</label>
             <input
                     class="form-control"
                     id="start"
                     name="start"
-                    placeholder="start"
+                    placeholder="Wprowadź datę"
                     th:field="*{start}"
                     type="text"
             />
@@ -59,12 +59,12 @@
                th:if="${#fields.hasErrors('start')}"></p>
           </div>
           <div class="form-group mb-3">
-            <label class="form-label">end</label>
+            <label class="form-label">Koniec wizyty</label>
             <input
                     class="form-control"
                     id="stop"
                     name="stop"
-                    placeholder="End"
+                    placeholder="Wprowadź datę"
                     th:field="*{end}"
                     type="text"
             />
@@ -74,8 +74,8 @@
 
 
           <div class="form-group">
-            <button class="btn btn-primary" type="submit">Register</button>
-            <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+            <button class="btn btn-primary" type="submit">Anuluj wizytę</button>
+
           </div>
         </form>
       </div>

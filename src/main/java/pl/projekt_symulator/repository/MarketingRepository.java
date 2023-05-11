@@ -5,4 +5,8 @@ import pl.projekt_symulator.entity.MarketingData;
 
 
 public interface MarketingRepository extends JpaRepository<MarketingData, Long> {
+
+    MarketingData findByUserId(Long Id);
+
+
 }

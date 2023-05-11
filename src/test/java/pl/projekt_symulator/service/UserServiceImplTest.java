@@ -1,12 +1,10 @@
 package pl.projekt_symulator.service;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.mapper.MarketingDataMapper;
@@ -15,7 +13,6 @@ import pl.projekt_symulator.repository.MarketingRepository;
 import pl.projekt_symulator.repository.RoleRepository;
 import pl.projekt_symulator.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +43,8 @@ class UserServiceImplTest {
         marketingMapper = mock(MarketingDataMapper.class);
         mailSender = mock(JavaMailSender.class);
         roleRepository = mock(RoleRepository.class);
-        service = new UserServiceImpl(repository, roleRepository, passwordEncoder, marketingRepository, userMapper, marketingMapper, mailSender);
+      //  jdbcTemplate = mock(jdbcTemplate)
+       // service = new UserServiceImpl(jdbcTemplate, repository, roleRepository, passwordEncoder, marketingRepository, userMapper, marketingMapper, mailSender);
     }
 
 
@@ -145,6 +143,15 @@ class UserServiceImplTest {
          //service.saveUser(userDto);
 
     }
+    @Test
+    public void delete_user() {
+        UserDto userDto = new UserDto();
+        userDto.setFirstName("firstName");
+        userDto.setLastName("lastName");
+        userDto.setEmail("email@.pl");
 
+        service.saveUser(userDto);
+        service.deleteUser(userDto);
+    }
 
 }

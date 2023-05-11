@@ -14,4 +14,9 @@ public interface UserService {
     User findUserById(Long id);
 
     List<UserDto> findAllUsers();
+
+    void  deleteUserWithAppointments(UserDto userDto);
+
+    String updatePassword(UserDto userDto, String password);
+
 }
