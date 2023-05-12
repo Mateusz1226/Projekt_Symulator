@@ -55,7 +55,6 @@ class ScheduleServiceTest {
         user.setId(1L);
 
 
-
         ArgumentCaptor<Schedule> argumentCaptor = ArgumentCaptor.forClass(Schedule.class);
         service.book(schedule, user);
         // sprawdza ile razy została wywołana metoda

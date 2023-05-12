@@ -52,11 +52,11 @@ class UserServiceImplTest {
     @Test
     public void when_searching_user_by_mail_then_return_object() {
         User userByMail = new User("mateuszkonkel132@gmail.com");
-        when(repository.findByEmail("mateuszkonkel132@gmail.com")).thenReturn(userByMail);
         User user = service.findUserByEmail("mateuszkonkel132@gmail.com");
+        when(repository.findByEmail("mateuszkonkel132@gmail.com")).thenReturn(userByMail);
+
         assertEquals("mateuszkonkel132@gmail.com", user.getEmail());
     }
-
 
     @Test
     public void when_searching_user_by_wrong_mail_then_return_null() {

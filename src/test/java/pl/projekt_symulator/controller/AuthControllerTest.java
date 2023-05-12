@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -73,7 +74,7 @@ class AuthControllerTest {
         userDto.setMarketingAgreement(true);
         userDto.setId(1L);
 
-      when(service.saveUser(userDto)).thenReturn("Dodano użytkownika");
+
 
         mockMvc.perform(post("/api/simulator/register/save")
                         .with(user("admin").password("pass").roles("ADMIN", "USER"))

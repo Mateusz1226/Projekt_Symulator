@@ -47,7 +47,11 @@ public class SpringSecurity {
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/api/simulator/register/**").permitAll()
                                 .requestMatchers("/api/simulator/index").permitAll()
+                                .requestMatchers("/api/simulator/changePassword/**").authenticated()
+                                .requestMatchers("/api/simulator/resetPassword/**").permitAll()
+                                .requestMatchers("/api/simulator/resetPassword/newPassword/**").permitAll()
                                 .requestMatchers("/api/simulator/login").permitAll()
+                                .requestMatchers("/api/simulator/changPassword").permitAll()
                                 .requestMatchers("/calender.html").permitAll()
                                 .requestMatchers("/mail").permitAll()
                                 .requestMatchers("/api/simulator/schedule/**").authenticated()
