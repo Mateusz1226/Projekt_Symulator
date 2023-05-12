@@ -18,6 +18,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
@@ -42,6 +43,8 @@ public class ScheduleService {
     }
 
     public String book(ScheduleDto scheduleDto, User user) {
+
+
 
 
         Schedule Schedule = scheduleRepository.findByStartAndEnd(scheduleDto.getStart(), scheduleDto.getEnd());
@@ -134,7 +137,7 @@ public class ScheduleService {
         message.setTo(user.getEmail());
         message.setSubject("Symulator strzelecki nożyno potwierdzenie rezerwacji");
         if (mailType.equals("book")) {
-            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od" + start + " do " + end + ".");
+            message.setText("Cześć " + user.getFirstName() + ", dziękujemy za zarezerwowanie terminu od " + start + " do " + end + ".");
             mailSender.send(message);
             return;
         }
