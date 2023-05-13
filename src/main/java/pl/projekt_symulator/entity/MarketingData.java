@@ -6,12 +6,14 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+
 @Table(name = "Marketing_datas")
 public class MarketingData {
 

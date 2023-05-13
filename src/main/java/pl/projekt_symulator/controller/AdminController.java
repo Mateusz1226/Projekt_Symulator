@@ -18,8 +18,8 @@ import pl.projekt_symulator.service.UserService;
 import java.util.List;
 
 
-@Controller
-@RequestMapping("/api/simulator/admin")
+//@Controller
+//@RequestMapping("/api/simulator/admin")
 public class AdminController {
 
 

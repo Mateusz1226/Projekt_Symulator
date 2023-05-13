@@ -4,10 +4,7 @@ package pl.projekt_symulator.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +13,10 @@ import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.UserService;
 
-@Controller
-@RequestMapping("/api/simulator/user")
-public class UserController {
+//@Controller
+//@RequestMapping("/api/simulator/user")
+/*
+//public class UserController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
@@ -96,3 +94,4 @@ public class UserController {
     }
 
 }
+*/

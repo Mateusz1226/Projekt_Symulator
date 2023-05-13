@@ -1,20 +1,12 @@
 package pl.projekt_symulator.security;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import pl.projekt_symulator.entity.Role;
-import pl.projekt_symulator.entity.User;
-import pl.projekt_symulator.repository.UserRepository;
 
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Service
+/*
+//@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
@@ -43,3 +35,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         return mapRoles;
     }
 }
+*/

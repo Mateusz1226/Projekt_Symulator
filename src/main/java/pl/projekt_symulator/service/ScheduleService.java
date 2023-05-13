@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
-@Service
+//@Service
 public class ScheduleService {
 
     private final JdbcTemplate jdbcTemplate;

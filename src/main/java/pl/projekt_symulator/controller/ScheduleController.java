@@ -1,5 +1,7 @@
 package pl.projekt_symulator.controller;
 
+/*
+//import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,8 +18,8 @@ import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.ScheduleService;
 import pl.projekt_symulator.service.UserService;
 
-@Controller
-@RequestMapping("/api/simulator")
+//@Controller
+//@RequestMapping("/api/simulator")
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final UserService userService;
@@ -53,6 +55,12 @@ public class ScheduleController {
         User user = userService.findUserByEmail(email);
 
         String response = scheduleService.book(schedule, user);
+
+        if (!response.equals("OK")) {
+            return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
+        }
+
+
         // return "schedule";
         return new ResponseEntity<String>(response, HttpStatus.CREATED);
     }
@@ -83,7 +91,14 @@ public class ScheduleController {
         User user = userService.findUserByEmail(email);
         String response = scheduleService.unbook(schedule, user);
 
+
+        if (!response.equals("Anulowano termin")) {
+            return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
+        }
+
+
         return new ResponseEntity<String>(response, HttpStatus.OK);
 
     }
 }
+*/

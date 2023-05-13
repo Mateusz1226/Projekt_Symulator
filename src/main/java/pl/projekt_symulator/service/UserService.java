@@ -1,7 +1,7 @@
 package pl.projekt_symulator.service;
 
 
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetails;
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.entity.User;
 
@@ -29,6 +29,6 @@ public interface UserService {
 
     String saveNewPassword(UserDto userDto);
 
-    String changePassword(UserDetails userDetails, String oldPassword, String newPassword1, String newPassword2);
+   // String changePassword(UserDetails userDetails, String oldPassword, String newPassword1, String newPassword2);
 
 }

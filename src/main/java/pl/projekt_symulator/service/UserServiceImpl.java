@@ -6,9 +6,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,7 +28,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Service
+/*
+//@Service
 
 public class UserServiceImpl implements UserService {
 
@@ -212,7 +211,7 @@ public class UserServiceImpl implements UserService {
 
        // szyfrowanie tego samego hasła daje zawsze inny wynik
 
-       // boolean passwordsMatch = passwordEncoder.matches(user.getPassword(), oldPasswordEncode);
+      // boolean passwordsMatch = passwordEncoder.matches(user.getPassword(), oldPasswordEncode);
         //    if (!passwordsMatch){
          //       throw new IllegalArgumentException("błędne stare hasło");
         //    }
@@ -230,3 +229,4 @@ public class UserServiceImpl implements UserService {
 
 }
 
+*/

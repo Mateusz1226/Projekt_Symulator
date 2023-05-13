@@ -32,6 +32,7 @@ public class UserDto
 
     private Boolean marketingAgreement;
    // @Length(min = 9,max = 12, message = "Wpisz poprawny numer telefonu")
+
     @Pattern(regexp = "\\d{9}",message = "Wpisz poprawny numer telefonu")
     private String phoneNumber;
 

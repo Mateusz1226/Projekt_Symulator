@@ -2,6 +2,8 @@ package pl.projekt_symulator.controller;
 
 
 
+/*
+//import jakarta.validation.Valid;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,8 @@ import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.UserService;
 
 
-@Controller
-@RequestMapping("/api/simulator")
+//@Controller
+//@RequestMapping("/api/simulator")
 public class AuthController {
 
 
@@ -91,4 +93,4 @@ public class AuthController {
 
     }
 
-}
+}*/
