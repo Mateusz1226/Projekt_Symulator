@@ -39,6 +39,7 @@ class UserRepositoryTest {
 
      when(userRepository.findByEmail("mateuszkonkel132@gmail.com")).thenReturn(user);
      User result =  userRepository.findByEmail("mateuszkonkel132@gmail.com");
+     assertNotNull(user);
      assertEquals(user.getFirstName(), result.getFirstName());
     }
 
