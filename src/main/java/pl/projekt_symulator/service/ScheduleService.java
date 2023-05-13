@@ -93,12 +93,18 @@ public class ScheduleService {
         return "Anulowano termin";
     }
 
+    public record termVerificationResult(String message, Boolean success) {
+
+    }
+
+
 
     public String termVerification(ScheduleDto scheduleDto) {
 
         // jak sprawdzić, czy wskazana data nie mieści się już w dacie innej rezerwacji
         // ?? może za pomocą pętli pobierać wszystkie rezerwacje i sprawdzać, czy ta nowa znajduje się w przedziale ??
         if (LocalDateTime.now().isAfter(scheduleDto.getStart())) {
+
             return "Nie można rezerwować dat przeszłych";
         }
 

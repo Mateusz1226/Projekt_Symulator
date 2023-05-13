@@ -25,17 +25,17 @@ public class Schedule {
     private Long Id;
 
 
-    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @NotNull
-    private LocalDateTime end;
-
-
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
     private LocalDateTime start;
 
+
+
+    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @NotNull
+    private LocalDateTime end;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
