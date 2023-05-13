@@ -16,8 +16,7 @@ import static org.mockito.Mockito.when;
 @DataJpaTest
 class UserRepositoryTest {
 
-    @Autowired
-    private TestEntityManager testEntityManager;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -31,40 +30,27 @@ class UserRepositoryTest {
      @Test
      public void find_by_email_then_return_user() {
 
-         Long userId = 6l;
-         String firstName = "name";
-         String lastName = "last name";
-         String password = "password";
-         String email = "mateuszkonkel132@gmail.com";
-
          User user = new User();
-         user.setId(userId);
-         user.setFirstName(firstName);
-         user.setLastName(lastName);
-         user.setPassword(password);
-         user.setEmail(email);
+         user.setId(6l);
+         user.setFirstName("name");
+         user.setLastName("last name");
+         user.setPassword("password");
+         user.setEmail("mateuszkonkel132@gmail.com");
 
      when(userRepository.findByEmail("mateuszkonkel132@gmail.com")).thenReturn(user);
      User result =  userRepository.findByEmail("mateuszkonkel132@gmail.com");
      assertEquals(user.getFirstName(), result.getFirstName());
-
     }
 
     @Test
     void save_user() {
 
-            Long userId = 6l;
-            String firstName = "name";
-            String lastName = "last name";
-            String password = "password";
-            String email = "mateuszkonkel132@gmail.com";
-
             User user = new User();
-            user.setId(userId);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setPassword(password);
-            user.setEmail(email);
+            user.setId(6l);
+            user.setFirstName("name");
+            user.setLastName("last name");
+            user.setPassword("password");
+            user.setEmail("mateuszkonkel132@gmail.com");
 
              when(userRepository.save(user)).thenReturn(user);
 
