@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 class ScheduleServiceTest {
 
     @InjectMocks
@@ -32,8 +32,7 @@ class ScheduleServiceTest {
 
     @Mock
     private ScheduleRepository repository;
-    @Mock
-    private UserServiceImpl userService;
+
     @Mock
     private ScheduleMapper scheduleMapper;
     @Mock

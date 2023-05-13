@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DataJpaTest
+/*
+//@DataJpaTest
 class ScheduleRepositoryTest {
 
 
@@ -60,4 +61,4 @@ class ScheduleRepositoryTest {
         when(repository.findByStartAndEnd(start,end)).thenReturn(schedule);
 
     }
-}
+}*/

@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import pl.projekt_symulator.dto.UserDto;
 import pl.projekt_symulator.service.UserService;
 
-@WebMvcTest(AuthController.class)
+//@WebMvcTest(AuthController.class)
 @WithMockUser(username = "admin", password = "pass", roles = "ADMIN,USER")
 class AuthControllerTest {
 

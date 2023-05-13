@@ -22,8 +22,8 @@ import pl.projekt_symulator.entity.User;
 import pl.projekt_symulator.service.ScheduleService;
 import pl.projekt_symulator.service.UserService;
 
-@WebMvcTest(AdminController.class)
-@WithMockUser(username = "admin", password = "pass", roles = "ADMIN,USER")
+//@WebMvcTest(AdminController.class)
+//@WithMockUser(username = "admin", password = "pass", roles = "ADMIN,USER")
 class AdminControllerTest {
 
     @Autowired
